@@ -27,7 +27,7 @@ export function SectionHeading({
       <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
         <h2
           className={cn(
-            "font-orbitron text-3xl font-medium text-balance lg:text-[50px]",
+            "font-orbitron text-3xl font-medium lg:text-balance lg:text-[50px]",
             textColor,
             titleClassName,
           )}
@@ -37,7 +37,7 @@ export function SectionHeading({
         {description && (
           <p
             className={cn(
-              "max-w-56 text-justify text-sm lg:max-w-85 lg:shrink-0 lg:text-lg",
+              "max-w-76 sm:max-w-none text-justify text-sm lg:max-w-85 lg:shrink-0 lg:text-lg",
               textColor,
             )}
           >

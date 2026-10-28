@@ -11,6 +11,7 @@ import { useMediaQuery } from "@/shared/lib/useMediaQuery";
 import { useScrolled } from "@/shared/lib/useScrolled";
 import { Container } from "./Container";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { SocialLinks } from "./SocialLinks";
 
 function isActivePath(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -26,8 +27,8 @@ export function Header({ className }: HeaderProps) {
   const closeMenu = () => setIsMenuOpen(false);
   const isHomePage = pathname === "/";
   // Matches Tailwind's `lg` breakpoint, where the desktop nav replaces the burger
-  const isDesktop = useMediaQuery("(min-width: 64rem)");
-  const isScrolled = useScrolled(isDesktop ? 200 : 50);
+  // const isDesktop = useMediaQuery("(min-width: 64rem)");
+  const isScrolled = useScrolled(50);
   // Home opens with a dark hero: header stays transparent with white logo until scrolled
   const isOverHero = isHomePage && !isScrolled;
 
@@ -48,11 +49,11 @@ export function Header({ className }: HeaderProps) {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-20 transition-colors duration-300",
-        isScrolled ? "bg-white" : "bg-transparent",
+        isScrolled ? "bg-white/80 backdrop-blur-md" : "bg-transparent",
         className,
       )}
     >
-      <Container className="flex h-15 items-center justify-between lg:h-auto lg:py-6">
+      <Container className="flex h-15 items-center justify-between lg:h-auto lg:py-4">
         {renderLogo(isOverHero ? "/logo.svg" : "/logo-dark.svg")}
 
         <nav className="hidden items-center gap-10 lg:flex">
@@ -147,12 +148,11 @@ export function Header({ className }: HeaderProps) {
             </ul>
           </nav>
 
-          <LanguageSwitcher
-            variant="inline"
-            theme="dark"
-            onChange={closeMenu}
-            className="px-4 pt-10 pb-8"
-          />
+          <div className="px-4 py-8 flex justify-between items-center">
+            <SocialLinks className=" lg:hidden" />
+
+            <LanguageSwitcher theme="dark" onChange={closeMenu} />
+          </div>
         </div>
       </Drawer>
     </header>
