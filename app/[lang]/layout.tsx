@@ -4,7 +4,7 @@ import { lang } from "next/root-params";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { getPageContent } from "@/shared/api/content";
+import { getContacts, getPageContent } from "@/shared/api/content";
 import { routing } from "@/i18n/routing";
 import AntProviders from "@/providers/AntProvider";
 import QueryProviders from "@/providers/query";
@@ -43,7 +43,7 @@ export default async function RootLayout({
     notFound();
   }
 
-  const messages = await getMessages();
+  const [messages, contacts] = await Promise.all([getMessages(), getContacts(currentLang)]);
 
   return (
     <html
@@ -55,7 +55,7 @@ export default async function RootLayout({
           <Suspense fallback={null}>
             <AntProviders>
               <QueryProviders>
-                <Header />
+                <Header socials={{ instagram: contacts.instagram, tiktok: contacts.tiktok }} />
 
                 {children}
                 <Footer />

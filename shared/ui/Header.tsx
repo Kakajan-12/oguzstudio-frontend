@@ -6,19 +6,23 @@ import { Drawer } from "antd";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { NAV_ITEMS } from "@/shared/config/navigation";
+import type { CompanyContacts } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { useScrolled } from "@/shared/lib/useScrolled";
 import { Container } from "./Container";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { SocialLinks } from "./SocialLinks";
 
 function isActivePath(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
 }
 
 type HeaderProps = {
+  /** Social links for the mobile menu, from the contacts set in the admin */
+  socials: Pick<CompanyContacts, "instagram" | "tiktok">;
   className?: string;
 };
-export function Header({ className }: HeaderProps) {
+export function Header({ socials, className }: HeaderProps) {
   const t = useTranslations("Navigation");
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,12 +52,14 @@ export function Header({ className }: HeaderProps) {
         "fixed inset-x-0 top-0 z-20 transition-[background-color,box-shadow] duration-200",
         // Between lg and xl the desktop nav reaches the dark half of the hero, where its dark links
         // would disappear, so there the header stays solid even at the top (CSS only: no flash)
-        isOverHero ? "bg-transparent lg:max-xl:bg-white" : "bg-white",
+        isOverHero
+          ? "bg-transparent lg:max-xl:bg-white/80 lg:max-xl:backdrop-blur-md"
+          : "bg-white/80 backdrop-blur-md",
         isScrolled && "shadow-[0_1px_0_rgba(15,15,15,0.08)]",
         className,
       )}
     >
-      <Container className="flex h-15 items-center justify-between lg:h-auto lg:py-6">
+      <Container className="flex h-15 items-center justify-between lg:h-auto lg:py-4">
         {isOverHero ? (
           <>
             {renderLogo("/logo.svg", "lg:max-xl:hidden")}
@@ -156,12 +162,11 @@ export function Header({ className }: HeaderProps) {
             </ul>
           </nav>
 
-          <LanguageSwitcher
-            variant="inline"
-            theme="dark"
-            onChange={closeMenu}
-            className="px-4 pt-10 pb-8"
-          />
+          <div className="px-4 py-8 flex justify-between items-center">
+            <SocialLinks contacts={socials} className="lg:hidden" />
+
+            <LanguageSwitcher theme="dark" onChange={closeMenu} />
+          </div>
         </div>
       </Drawer>
     </header>

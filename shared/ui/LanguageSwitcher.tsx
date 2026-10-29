@@ -1,22 +1,58 @@
 "use client";
 
 import { useTransition } from "react";
-import { hasLocale, useLocale, useTranslations, type Locale } from "next-intl";
+import { ConfigProvider, Segmented, type ThemeConfig } from "antd";
+import { useLocale, useTranslations, type Locale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
-import { cn } from "@/shared/lib/cn";
+
+type SwitcherTheme = "light" | "dark";
+
+/** Only these locales are offered in the switcher; `tk` stays reachable by URL */
+const SWITCHER_LOCALES = ["en", "ru"] satisfies Locale[];
+
+type SegmentedTokens = NonNullable<
+  NonNullable<ThemeConfig["components"]>["Segmented"]
+>;
+
+// 36px pill: 4px inset track, so the flat white thumb comes out 28px tall
+const BASE_TOKENS: SegmentedTokens = {
+  controlHeight: 36,
+  trackPadding: 4,
+  borderRadius: 10,
+  borderRadiusSM: 8,
+  boxShadowTertiary: "none",
+  itemSelectedBg: "#ffffff",
+  itemSelectedColor: "#0f0f0f",
+};
+
+const THEME_TOKENS: Record<SwitcherTheme, SegmentedTokens> = {
+  light: {
+    ...BASE_TOKENS,
+    trackBg: "#eeeeee",
+    itemColor: "#0f0f0f",
+    itemHoverColor: "#0f0f0f",
+    itemHoverBg: "rgba(15, 15, 15, 0.05)",
+    itemActiveBg: "rgba(15, 15, 15, 0.1)",
+  },
+  // Sits on the #0f0f0f drawer, mirrors its white/60 inactive nav links
+  dark: {
+    ...BASE_TOKENS,
+    trackBg: "rgba(255, 255, 255, 0.12)",
+    itemColor: "rgba(255, 255, 255, 0.6)",
+    itemHoverColor: "#ffffff",
+    itemHoverBg: "rgba(255, 255, 255, 0.08)",
+    itemActiveBg: "rgba(255, 255, 255, 0.16)",
+    colorPrimaryBorder: "rgba(255, 255, 255, 0.5)",
+  },
+};
 
 type LanguageSwitcherProps = {
-  /** `compact` for the desktop header (styled like the nav links), `inline` for the mobile menu */
-  variant?: "compact" | "inline";
-  theme?: "light" | "dark";
+  theme?: SwitcherTheme;
   className?: string;
   onChange?: () => void;
 };
 
-/** All three locales are always visible: one click to switch, no dropdown */
 export function LanguageSwitcher({
-  variant = "compact",
   theme = "light",
   className,
   onChange,
@@ -29,62 +65,31 @@ export function LanguageSwitcher({
   const [isPending, startTransition] = useTransition();
 
   const changeLocale = (next: Locale) => {
-    if (!hasLocale(routing.locales, next) || next === locale) return;
+    if (isPending || next === locale) return;
     onChange?.();
     startTransition(() => {
       router.replace(pathname, { locale: next });
     });
   };
 
-  const isDark = theme === "dark";
-
   return (
-    <div
-      role="group"
-      aria-label={tNav("language")}
-      aria-busy={isPending || undefined}
-      className={cn(
-        "flex items-center",
-        variant === "compact" ? "gap-1" : "gap-2",
-        isPending && "opacity-60",
-        className,
-      )}
-    >
-      {routing.locales.map((item: Locale) => {
-        const isActive = item === locale;
-        return (
-          <button
-            key={item}
-            type="button"
-            lang={item}
-            aria-pressed={isActive}
-            title={t(item)}
-            disabled={isPending}
-            onClick={() => changeLocale(item)}
-            className={cn(
-              "text-sm leading-none font-medium uppercase tracking-[0.28px] transition-colors",
-              variant === "compact"
-                ? cn(
-                    "relative cursor-pointer rounded-[2px] px-2 py-2.5",
-                    isDark
-                      ? "text-white hover:bg-white hover:text-dark"
-                      : "text-dark hover:bg-dark hover:text-white",
-                    isActive
-                      ? "after:absolute after:inset-x-2 after:bottom-1 after:h-px after:bg-current"
-                      : "opacity-45 hover:opacity-100",
-                  )
-                : cn(
-                    "h-10 min-w-12 cursor-pointer rounded-[2px] border px-3",
-                    isActive
-                      ? "border-white bg-white text-dark"
-                      : "border-white/40 text-white hover:border-white",
-                  ),
-            )}
-          >
-            {item}
-          </button>
-        );
-      })}
-    </div>
+    <ConfigProvider theme={{ components: { Segmented: THEME_TOKENS[theme] } }}>
+      <Segmented<Locale>
+        value={locale}
+        onChange={changeLocale}
+        aria-label={tNav("language")}
+        aria-busy={isPending}
+        className={className}
+        classNames={{
+          item: "min-w-12",
+          label: "font-medium tracking-[0.28px]",
+        }}
+        options={SWITCHER_LOCALES.map((item) => ({
+          value: item,
+          label: item.toUpperCase(),
+          title: t(item),
+        }))}
+      />
+    </ConfigProvider>
   );
 }

@@ -12,15 +12,15 @@ export function ClientsSection({ content, clients }: ClientsSectionProps) {
   if (clients.length === 0) return null;
 
   return (
-    <section className="mt-20 lg:mt-[140px]">
+    <section className="mt-20 lg:mt-35">
       <Container>
         <SectionHeading
           label={content.label}
           title={content.title}
           description={content.description}
-          titleClassName="max-w-[292px] lg:max-w-[420px]"
+          titleClassName="max-w-76 lg:max-w-[420px]"
         />
-        <ClientsShowcase clients={clients} className="mt-16 lg:mt-[52px]" />
+        <ClientsShowcase clients={clients} className="mt-16 lg:mt-13" />
       </Container>
     </section>
   );
