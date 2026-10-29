@@ -1,31 +1,37 @@
 import Image from "next/image";
-import { CONTACTS } from "@/shared/config/contacts";
+import type { CompanyContacts } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 
 const SOCIALS = [
   {
     name: "Instagram",
-    href: CONTACTS.instagram,
+    key: "instagram",
     icon: "/icons/instagram.svg",
     width: 20,
     height: 20,
   },
   {
     name: "TikTok",
-    href: CONTACTS.tiktok,
+    key: "tiktok",
     icon: "/icons/tiktok.svg",
     width: 18,
     height: 22,
   },
 ] as const;
 
-export function SocialLinks({ className }: { className?: string }) {
+type SocialLinksProps = {
+  contacts: Pick<CompanyContacts, "instagram" | "tiktok">;
+  className?: string;
+};
+
+/** Links that are not set in the admin are hidden */
+export function SocialLinks({ contacts, className }: SocialLinksProps) {
   return (
     <ul className={cn("flex items-center gap-3", className)}>
-      {SOCIALS.map((social) => (
+      {SOCIALS.filter((social) => contacts[social.key]).map((social) => (
         <li key={social.name}>
           <a
-            href={social.href}
+            href={contacts[social.key]}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={social.name}

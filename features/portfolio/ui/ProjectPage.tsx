@@ -1,9 +1,6 @@
 import { notFound } from "next/navigation";
-import { useLocale } from "next-intl";
-import {
-  getPortfolioProjectMock,
-  getPortfolioProjectsMock,
-} from "../mocks/projects";
+import { getLocale } from "next-intl/server";
+import { getProject } from "@/shared/api/content";
 import { ProjectDetails } from "./ProjectDetails";
 import { ProjectGallery } from "./ProjectGallery";
 import { ProjectIntro } from "./ProjectIntro";
@@ -11,18 +8,12 @@ import { ProjectRelated } from "./ProjectRelated";
 
 const RELATED_COUNT = 3;
 
-export function ProjectPage({ projectId }: { projectId: string }) {
-  const locale = useLocale();
-  // TODO: replace mocks with API data
-  const project = getPortfolioProjectMock(projectId, locale);
+export async function ProjectPage({ projectId }: { projectId: string }) {
+  const project = await getProject(projectId, await getLocale());
   if (!project) notFound();
 
-  const related = getPortfolioProjectsMock(locale)
-    .filter(
-      ({ id, category }) =>
-        id !== project.id && category.value === project.category.value,
-    )
-    .slice(0, RELATED_COUNT);
+  // The API returns other projects of the same category
+  const related = project.related.slice(0, RELATED_COUNT);
 
   return (
     <main className="flex-1 pb-[60px] lg:pb-[140px]">

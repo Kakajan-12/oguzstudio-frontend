@@ -3,12 +3,15 @@ import { Roboto } from "next/font/google";
 import { lang } from "next/root-params";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
+import { getPageContent } from "@/shared/api/content";
 import { routing } from "@/i18n/routing";
 import AntProviders from "@/providers/AntProvider";
 import QueryProviders from "@/providers/query";
 import "./globals.css";
-import { Footer, Header } from "@/shared/ui";
+import { Header } from "@/shared/ui";
+// Server-only (fetches contacts), so it is not part of the shared/ui barrel used by client components
+import { Footer } from "@/shared/ui/Footer";
 import { Suspense } from "react";
 
 const roboto = Roboto({
@@ -21,11 +24,11 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Metadata");
+  const { seo } = await getPageContent("common", await getLocale());
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title: seo.title,
+    description: seo.description,
   };
 }
 

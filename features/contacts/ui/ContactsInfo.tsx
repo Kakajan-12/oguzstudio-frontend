@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { CONTACTS } from "@/shared/config/contacts";
+import type { CompanyContacts } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { CopyButton } from "./CopyButton";
 
@@ -34,65 +34,72 @@ function InfoRow({ label, action, children }: InfoRowProps) {
   );
 }
 
-export function ContactsInfo({ className }: { className?: string }) {
+type ContactsInfoProps = {
+  contacts: CompanyContacts;
+  className?: string;
+};
+
+export function ContactsInfo({ contacts, className }: ContactsInfoProps) {
   const t = useTranslations("ContactsPage.info");
-  const tFooter = useTranslations("Footer");
+  const socials = [
+    { name: "Instagram", href: contacts.instagram },
+    { name: "TikTok", href: contacts.tiktok },
+  ].filter((social) => social.href);
 
   return (
     <dl className={cn("border-t border-line", className)}>
       <InfoRow
         label={t("phone")}
-        action={<CopyButton value={CONTACTS.phone} className={actionClassName} />}
+        action={<CopyButton value={contacts.phone} className={actionClassName} />}
       >
-        <a href={CONTACTS.phoneHref} className={valueLinkClassName}>
-          {CONTACTS.phone}
+        <a href={contacts.phoneHref} className={valueLinkClassName}>
+          {contacts.phone}
         </a>
       </InfoRow>
       <InfoRow
         label={t("email")}
-        action={<CopyButton value={CONTACTS.email} className={actionClassName} />}
+        action={<CopyButton value={contacts.email} className={actionClassName} />}
       >
-        <a href={`mailto:${CONTACTS.email}`} className={valueLinkClassName}>
-          {CONTACTS.email}
+        <a href={`mailto:${contacts.email}`} className={valueLinkClassName}>
+          {contacts.email}
         </a>
       </InfoRow>
       <InfoRow
         label={t("address")}
         action={
-          <a
-            href={CONTACTS.googleMaps}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={actionClassName}
-          >
-            {t("viewOnMap")}
-          </a>
+          contacts.googleMapsUrl && (
+            <a
+              href={contacts.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={actionClassName}
+            >
+              {t("viewOnMap")}
+            </a>
+          )
         }
       >
         <address className="not-italic lg:max-w-[320px]">
-          {tFooter("addressValue")}
+          {contacts.address}
         </address>
       </InfoRow>
-      <InfoRow label={t("social")}>
-        <span className="flex flex-wrap gap-x-7 gap-y-2">
-          <a
-            href={CONTACTS.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn("underline underline-offset-4", valueLinkClassName)}
-          >
-            Instagram
-          </a>
-          <a
-            href={CONTACTS.tiktok}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn("underline underline-offset-4", valueLinkClassName)}
-          >
-            TikTok
-          </a>
-        </span>
-      </InfoRow>
+      {socials.length > 0 && (
+        <InfoRow label={t("social")}>
+          <span className="flex flex-wrap gap-x-7 gap-y-2">
+            {socials.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn("underline underline-offset-4", valueLinkClassName)}
+              >
+                {social.name}
+              </a>
+            ))}
+          </span>
+        </InfoRow>
+      )}
     </dl>
   );
 }

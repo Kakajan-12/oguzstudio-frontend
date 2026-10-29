@@ -3,16 +3,16 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Dropdown, type MenuProps } from "antd";
-import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/cn";
-import { PROJECT_CATEGORIES, type ProjectCategory } from "../model/categories";
+import type { FilterOption } from "@/features/portfolio/model/types";
 import { fieldControlClassName, floatingLabelClassName } from "./FormField";
 
 type CategorySelectProps = {
   name: string;
   label: string;
-  value: ProjectCategory | null;
-  onChange: (value: ProjectCategory) => void;
+  options: FilterOption[];
+  value: string | null;
+  onChange: (value: string) => void;
   className?: string;
 };
 
@@ -20,17 +20,18 @@ type CategorySelectProps = {
 export function CategorySelect({
   name,
   label,
+  options,
   value,
   onChange,
   className,
 }: CategorySelectProps) {
-  const t = useTranslations("ContactsPage.form.categories");
   const [isOpen, setIsOpen] = useState(false);
 
-  const items: MenuProps["items"] = PROJECT_CATEGORIES.map((category) => ({
-    key: category,
-    label: t(category),
+  const items: MenuProps["items"] = options.map((option) => ({
+    key: option.value,
+    label: option.label,
   }));
+  const selected = options.find((option) => option.value === value);
 
   return (
     <div className={cn("relative pt-5", className)}>
@@ -48,7 +49,7 @@ export function CategorySelect({
           selectable: true,
           selectedKeys: value ? [value] : [],
           onClick: ({ key }) => {
-            onChange(key as ProjectCategory);
+            onChange(key);
             setIsOpen(false);
           },
         }}
@@ -57,14 +58,14 @@ export function CategorySelect({
           type="button"
           aria-haspopup="listbox"
           aria-expanded={isOpen}
-          aria-label={value ? `${label}: ${t(value)}` : label}
+          aria-label={selected ? `${label}: ${selected.label}` : label}
           className={cn(
             fieldControlClassName,
             "flex h-11 cursor-pointer items-center justify-between gap-3 text-left",
             isOpen && "border-dark",
           )}
         >
-          <span className="truncate">{value ? t(value) : label}</span>
+          <span className="truncate">{selected ? selected.label : label}</span>
           <span className="flex h-[11.3px] w-4 shrink-0 items-center justify-center">
             <Image
               src="/icons/chevron-small.svg"
@@ -79,7 +80,7 @@ export function CategorySelect({
           </span>
         </button>
       </Dropdown>
-      {value && <span className={floatingLabelClassName}>{label}</span>}
+      {selected && <span className={floatingLabelClassName}>{label}</span>}
     </div>
   );
 }

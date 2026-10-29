@@ -34,3 +34,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Content and API
+
+All content comes from the API in `../backend` and is managed in the admin panel (`../admin`):
+
+- `shared/api/content.ts` — server-side getters (`"use cache"`, tag `content`); texts arrive already translated
+  for the requested locale, images as absolute URLs from the API.
+- `app/api/revalidate` — the API calls it after every change in the admin, so the site updates right away
+  (`REVALIDATE_SECRET` here = `SITE_REVALIDATE_SECRET` in the API).
+- `shared/api/forms.ts` — contact form and job applications (with resume), sent from the browser to the API.
+- `messages/*.json` keep only interface strings (menu, buttons, form labels); page texts are edited in the admin.
+
+Copy `.env.example` to `.env.local`. The API must be running for `next dev` and `next build`.

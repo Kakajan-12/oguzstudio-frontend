@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ContentImage as Image } from "@/shared/ui/ContentImage";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/shared/ui";

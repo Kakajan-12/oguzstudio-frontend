@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ContentImage as Image } from "@/shared/ui/ContentImage";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/shared/lib/cn";
 import type { PortfolioProject } from "../model/types";

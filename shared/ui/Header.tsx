@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { NAV_ITEMS } from "@/shared/config/navigation";
 import { cn } from "@/shared/lib/cn";
-import { useMediaQuery } from "@/shared/lib/useMediaQuery";
 import { useScrolled } from "@/shared/lib/useScrolled";
 import { Container } from "./Container";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -25,14 +24,13 @@ export function Header({ className }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
   const isHomePage = pathname === "/";
-  // Matches Tailwind's `lg` breakpoint, where the desktop nav replaces the burger
-  const isDesktop = useMediaQuery("(min-width: 64rem)");
-  const isScrolled = useScrolled(isDesktop ? 200 : 50);
-  // Home opens with a dark hero: header stays transparent with white logo until scrolled
+  const isScrolled = useScrolled(8);
+  // Home opens with a dark hero: the header is transparent with a white logo only at the very top.
+  // Other pages start on white, so the header is solid right away and content never shows through.
   const isOverHero = isHomePage && !isScrolled;
 
-  const renderLogo = (src: string) => (
-    <Link href="/" aria-label="Oguz Studio" onClick={closeMenu}>
+  const renderLogo = (src: string, className?: string) => (
+    <Link href="/" aria-label="Oguz Studio" onClick={closeMenu} className={className}>
       <Image
         src={src}
         alt="Oguz Studio"
@@ -47,16 +45,27 @@ export function Header({ className }: HeaderProps) {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-20 transition-colors duration-300",
-        isScrolled ? "bg-white" : "bg-transparent",
+        "fixed inset-x-0 top-0 z-20 transition-[background-color,box-shadow] duration-200",
+        // Between lg and xl the desktop nav reaches the dark half of the hero, where its dark links
+        // would disappear, so there the header stays solid even at the top (CSS only: no flash)
+        isOverHero ? "bg-transparent lg:max-xl:bg-white" : "bg-white",
+        isScrolled && "shadow-[0_1px_0_rgba(15,15,15,0.08)]",
         className,
       )}
     >
       <Container className="flex h-15 items-center justify-between lg:h-auto lg:py-6">
-        {renderLogo(isOverHero ? "/logo.svg" : "/logo-dark.svg")}
+        {isOverHero ? (
+          <>
+            {renderLogo("/logo.svg", "lg:max-xl:hidden")}
+            {renderLogo("/logo-dark.svg", "hidden lg:max-xl:block")}
+          </>
+        ) : (
+          renderLogo("/logo-dark.svg")
+        )}
 
-        <nav className="hidden items-center gap-10 lg:flex">
-          <ul className="flex items-center gap-10">
+        <nav className="hidden items-center gap-6 lg:flex">
+          {/* Items carry their own padding for the hover plate, so the gaps are smaller */}
+          <ul className="flex items-center gap-4">
             {NAV_ITEMS.map(({ key, href }) => {
               const isActive = isActivePath(pathname, href);
               return (
@@ -65,10 +74,10 @@ export function Header({ className }: HeaderProps) {
                     href={href}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "relative block text-sm leading-none uppercase tracking-[0.28px] text-dark transition-opacity",
-                      isActive
-                        ? "font-medium after:absolute after:inset-x-1 after:-bottom-2 after:h-px after:bg-dark"
-                        : "hover:opacity-70",
+                      "relative block rounded-[2px] px-3 py-2.5 text-sm leading-none uppercase tracking-[0.28px] text-dark transition-colors duration-200",
+                      "hover:bg-dark hover:text-white focus-visible:bg-dark focus-visible:text-white focus-visible:outline-none",
+                      isActive &&
+                        "font-medium after:absolute after:inset-x-4 after:bottom-1 after:h-px after:bg-current",
                     )}
                   >
                     {t(key)}
@@ -77,7 +86,7 @@ export function Header({ className }: HeaderProps) {
               );
             })}
           </ul>
-          <LanguageSwitcher />
+          <LanguageSwitcher className="border-l border-dark/15 pl-4" />
         </nav>
 
         <button

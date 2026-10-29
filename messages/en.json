@@ -1,8 +1,4 @@
 {
-  "Metadata": {
-    "title": "Oguz Studio",
-    "description": "Exhibition stands, indoor and outdoor advertising — from concept to installation."
-  },
   "Navigation": {
     "home": "Home",
     "about": "About us",
@@ -20,34 +16,13 @@
   },
   "HomePage": {
     "hero": {
-      "title": "We Create What You Can’t Overlooked",
-      "description": "Exhibition stands, indoor and outdoor advertising — from concept to installation. We create visual solutions that capture attention and strengthen your brand.",
       "consultation": "Request a Consultation",
-      "explore": "Explore Our Work",
-      "imageAlt": "Exhibition stand designed by Oguz Studio"
+      "explore": "Explore Our Work"
     },
     "about": {
-      "label": "About us",
-      "title": "We Turn Vision Into Reality",
-      "paragraph1": "Oguz Studio is a creative production studio based in Ashgabat. We design and build exhibition stands, indoor and outdoor advertising and visual concepts for brands that want to be noticed. Designers, 3D artists, engineers and installers work as one team, so every project is handled from the first idea to the final installation.",
-      "paragraph2": "We believe a strong visual solution starts with understanding the client’s goals. That is why we work closely with every partner and offer ideas that are both bold and realistic to produce.",
-      "readMore": "Read more",
-      "imageAlt": "University of Adelaide banner made by Oguz Studio"
-    },
-    "services": {
-      "label": "Our services",
-      "title": "Solutions Built for What’s Next",
-      "description": "From exhibition stands to large-scale advertising, we turn ideas into impactful physical experiences."
-    },
-    "clients": {
-      "label": "Our clients & projects",
-      "title": "Ideas We Bring to the World",
-      "description": "Every project begins with a vision. We turn it into powerful physical and visual experiences."
+      "readMore": "Read more"
     },
     "contact": {
-      "label": "Contact us",
-      "title": "Let’s Bring Your Vision to Life",
-      "description": "Have an exhibition stand, advertising project or visual concept in mind? Let’s discuss it. Our team will help turn your idea into a solution that makes an impact.",
       "cta": "Start a Consultation"
     }
   },
@@ -80,39 +55,34 @@
     "related": "More From This Category"
   },
   "AboutPage": {
-    "title": "About Us",
-    "paragraph1": "Oguz Studio is a creative and production company focused on transforming ideas into distinctive physical and visual experiences. We work across exhibition stands, outdoor and indoor advertising, 2D and 3D design, printing, promotional products and custom visual solutions. By bringing creative thinking and production capabilities together, we help brands create a stronger and more recognizable presence.",
-    "paragraph2": "Every project begins with an idea, but bringing it to life requires more than design alone. We combine strategy, creative direction, technical precision and reliable production to deliver solutions that are both visually impactful and purposeful. From the first concept and visual development to production and final installation, we manage the process with attention to every detail. Our goal is to create work that communicates clearly, fits its environment and leaves a lasting impression.",
-    "gallery": {
-      "essen": "Essen billboard made by Oguz Studio",
-      "workspace": "Designer working at the Oguz Studio office",
-      "shop": "Shop shelves designed by Oguz Studio",
-      "gallery": "Exhibition hall designed by Oguz Studio"
-    },
-    "team": {
-      "title": "The Team That Brings Ideas to Life"
-    },
-    "brands": {
-      "title": "Brands We Work With"
-    },
     "careers": {
-      "title": "Great Work Starts With Great People",
-      "description": "We believe great work is built by people who take responsibility and strive for excellence. At Oguz Studio, you’ll work on real projects, grow your expertise and contribute to meaningful visual solutions.",
-      "link": "Discover Open Positions",
-      "imageAlt": "Oguz Studio team working on a project at the table"
+      "link": "Discover Open Positions"
     }
   },
   "CareersPage": {
-    "title": "Careers",
-    "imageAlt": "Oguz Studio team discussing a project at the table",
-    "heading": "A Place To Grow And Create.",
-    "paragraph1": "We believe the best work comes from people who care about what they create. At Oguz Studio, we bring together creative thinking, technical expertise, and a strong sense of responsibility to turn ideas into meaningful physical and visual experiences.",
-    "paragraph2": "You’ll work alongside people who value initiative, precision, and a commitment to doing things well. We encourage our team to take ownership of their work, contribute ideas, solve problems, and continuously develop their skills. Every project is an opportunity to learn something new, take on greater responsibility, and see your contribution become part of the final result.",
-    "paragraph3": "Whether you’re working on design, production, branding, or project execution, your work has a visible impact. We’re building a team of people who want to grow with the company, challenge themselves, and create work they can be proud of.",
     "positions": {
-      "title": "Open Positions",
       "requirements": "Requirements",
       "apply": "Apply now"
+    },
+    "applyForm": {
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone number",
+      "message": "Cover letter",
+      "resume": "Attach resume",
+      "resumeHint": "PDF, DOC or DOCX, up to 10 MB",
+      "send": "Send application",
+      "sending": "Sending…",
+      "sent": "Thank you! Your application has been sent. We will contact you if your profile fits the position.",
+      "close": "Close",
+      "errors": {
+        "rateLimit": "Too many requests. Please try again in an hour.",
+        "invalid": "Please check the fields and the file, then try again.",
+        "network": "Could not send the application. Please try again later.",
+        "fileMissing": "Please attach your resume.",
+        "fileType": "The resume must be a PDF, DOC or DOCX file.",
+        "fileSize": "The file is larger than 10 MB."
+      }
     }
   },
   "ContactsPage": {
@@ -127,8 +97,6 @@
       "viewOnMap": "View in Google Maps"
     },
     "form": {
-      "title": "Let’s Talk About Your Project",
-      "subtitle": "Share your ideas with us, and our team will get back to you within 24 hours to discuss the details and next steps.",
       "firstName": "First name",
       "lastName": "Last name",
       "email": "Email",
@@ -139,15 +107,13 @@
       "send": "Send",
       "sent": "Thank you! We will get back to you within 24 hours.",
       "categories": {
-        "design": "2D & 3D Design",
-        "exhibitionStands": "Exhibition Stands",
-        "outdoor": "Outdoor Advertising",
-        "indoor": "Indoor Advertising",
-        "branding": "Branding",
-        "production": "Print & Production",
-        "installation": "Installation",
-        "eventDecoration": "Event Decoration",
         "other": "Other"
+      },
+      "sending": "Sending…",
+      "errors": {
+        "rateLimit": "Too many requests. Please try again in an hour.",
+        "invalid": "Please check the fields and try again.",
+        "network": "Could not send the message. Please try again later."
       }
     }
   },
@@ -155,7 +121,6 @@
     "learnMore": "Learn More",
     "contactUs": "Contact Us",
     "address": "Address",
-    "addressValue": "Turkmenistan, Ashgabat, Bitaraplyk Avenue 83",
     "email": "Email",
     "mapAlt": "Oguz Studio location on the map",
     "terms": "Terms of Use",

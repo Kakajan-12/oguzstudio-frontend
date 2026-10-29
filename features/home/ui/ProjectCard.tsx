@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ContentImage as Image } from "@/shared/ui/ContentImage";
 import { Link } from "@/i18n/navigation";
 import type { ClientProject } from "../model/types";
 
@@ -32,7 +32,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
               <span aria-hidden className="size-[5px] rounded-full bg-muted" />
               {project.category}
             </p>
-            <p className="text-justify text-base leading-normal text-black">
+            <p className="lg:text-justify text-base leading-normal text-black">
               {project.description}
             </p>
           </div>

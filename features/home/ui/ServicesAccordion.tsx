@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { ContentImage as Image } from "@/shared/ui/ContentImage";
 import { motion } from "motion/react";
 import { cn } from "@/shared/lib/cn";
 import { DotList } from "@/shared/ui";
@@ -124,7 +124,7 @@ export function ServicesAccordion({ services, className }: ServicesAccordionProp
 
                 <div id={panelId} className={cn("lg:hidden", !isMobileOpen && "hidden")}>
                   <ServiceImages service={service} className="mt-4" />
-                  <p className="mt-4 text-justify text-base leading-normal tracking-[0.32px] text-black">
+                  <p className="mt-4 lg:text-justify text-base leading-normal tracking-[0.32px] text-black">
                     {service.description}
                   </p>
                 </div>
@@ -140,7 +140,7 @@ export function ServicesAccordion({ services, className }: ServicesAccordionProp
                   transition={TRANSITION}
                   className="hidden overflow-hidden lg:block"
                 >
-                  <p className="pt-4 text-justify text-base leading-normal tracking-[0.32px] text-black">
+                  <p className="pt-4 lg:text-justify text-base leading-normal tracking-[0.32px] text-black">
                     {service.description}
                   </p>
                 </motion.div>

@@ -1,16 +1,14 @@
-import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { ContentImage as Image } from "@/shared/ui/ContentImage";
 import { Container } from "@/shared/ui";
 import type { TeamMember } from "../model/types";
 
-export function AboutTeam({ members }: { members: TeamMember[] }) {
-  const t = useTranslations("AboutPage.team");
+export function AboutTeam({ title, members }: { title: string; members: TeamMember[] }) {
 
   return (
     <section className="mt-20 pb-20 lg:mt-[140px] lg:pb-[140px]">
       <Container>
         <h2 className="max-w-[292px] font-orbitron text-[32px] leading-[1.3] font-medium tracking-[-0.64px] text-balance text-black lg:max-w-[600px] lg:text-[50px] lg:tracking-normal">
-          {t("title")}
+          {title}
         </h2>
         <ul className="mt-10 grid grid-cols-2 gap-x-3 gap-y-8 lg:mt-[52px] lg:grid-cols-4 lg:gap-x-4 lg:gap-y-10">
           {members.map((member) => (

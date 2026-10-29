@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { ContentImage as Image } from "@/shared/ui/ContentImage";
 import { Modal } from "antd";
 import { useTranslations } from "next-intl";
 import { Container } from "@/shared/ui";
@@ -43,7 +43,8 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
   return (
     <section className="mt-14 lg:mt-20">
       <Container>
-        <ul className="flex h-[360px] gap-2 lg:h-[640px] lg:gap-3">
+        {/* Below lg a swipeable strip: squeezing every photo into one row leaves unreadable slivers */}
+        <ul className="-mx-4 flex h-[360px] snap-x snap-mandatory scroll-px-4 gap-2 overflow-x-auto px-4 [scrollbar-width:none] lg:mx-0 lg:h-[640px] lg:snap-none lg:gap-3 lg:overflow-visible lg:px-0">
           {images.map((src, index) => {
             const isActive = index === activeIndex;
             const number = index + 1;
@@ -52,7 +53,8 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
               <li
                 key={`${src}-${index}`}
                 className={cn(
-                  "min-w-0 flex-[1_1_0%] transition-[flex-grow,flex-basis] duration-500 ease-out motion-reduce:transition-none",
+                  "w-[78%] shrink-0 snap-start sm:w-[45%]",
+                  "lg:w-auto lg:min-w-0 lg:flex-[1_1_0%] lg:transition-[flex-grow,flex-basis] lg:duration-500 lg:ease-out motion-reduce:transition-none",
                   isActive && "lg:flex-[0_0_50vw]",
                 )}
               >
@@ -70,11 +72,11 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
                     src={src}
                     alt={getAlt(index)}
                     fill
-                    sizes="50vw"
+                    sizes="(min-width: 1024px) 50vw, 80vw"
                     className="object-cover"
                   />
                   <span className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
-                  <span className="absolute bottom-3 left-3 font-numeric text-xs leading-none font-medium whitespace-nowrap text-white lg:bottom-4 lg:left-4 lg:text-sm">
+                  <span className="absolute bottom-3 left-3 font-numeric text-xs leading-none font-medium whitespace-nowrap text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.65)] lg:bottom-4 lg:left-4 lg:text-sm">
                     {formatIndex(number)} / {total}
                   </span>
                 </button>

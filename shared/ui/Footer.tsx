@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getContacts } from "@/shared/api/content";
 import { CONTACTS } from "@/shared/config/contacts";
 import { NAV_ITEMS } from "@/shared/config/navigation";
 import { cn } from "@/shared/lib/cn";
@@ -28,9 +29,19 @@ function FooterColumn({ title, className, children }: FooterColumnProps) {
 
 const linkClassName = "opacity-80 transition-opacity hover:opacity-100";
 
-export function Footer({ className }: { className?: string }) {
-  const t = useTranslations("Footer");
-  const tNav = useTranslations("Navigation");
+/** Keyless Google Maps embed centered on "lat, lng" from the admin settings */
+function mapEmbedUrl(coordinates: string, locale: string) {
+  const query = coordinates.replace(/\s+/g, "");
+  return `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=16&hl=${locale}&output=embed`;
+}
+
+export async function Footer({ className }: { className?: string }) {
+  const locale = await getLocale();
+  const [t, tNav, contacts] = await Promise.all([
+    getTranslations("Footer"),
+    getTranslations("Navigation"),
+    getContacts(locale),
+  ]);
 
   return (
     <footer className={cn("bg-dark text-white", className)}>
@@ -46,7 +57,7 @@ export function Footer({ className }: { className?: string }) {
                 className="h-15 w-32 lg:h-22 lg:w-46.5"
               />
             </Link>
-            <SocialLinks className="lg:hidden" />
+            <SocialLinks contacts={contacts} className="lg:hidden" />
           </div>
 
           <div className="mt-13 flex w-full max-w-73 justify-between lg:contents">
@@ -63,12 +74,12 @@ export function Footer({ className }: { className?: string }) {
             </FooterColumn>
             <FooterColumn title={t("contactUs")}>
               <li>
-                <a href={CONTACTS.phoneHref} className={linkClassName}>
-                  {CONTACTS.phone}
+                <a href={contacts.phoneHref} className={linkClassName}>
+                  {contacts.phone}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${CONTACTS.email}`} className={linkClassName}>
+                <a href={`mailto:${contacts.email}`} className={linkClassName}>
                   {t("email")}
                 </a>
               </li>
@@ -80,34 +91,30 @@ export function Footer({ className }: { className?: string }) {
               {t("address")}
             </p>
             <address className="mt-4 text-sm leading-[1.4] not-italic opacity-80">
-              {t("addressValue")}
+              {contacts.address}
             </address>
           </div>
 
           <div className="hidden lg:block">
-            <div className="relative h-56 w-97 overflow-hidden">
-              <Image
-                src="/map.png"
-                alt={t("mapAlt")}
-                fill
-                sizes="389px"
-                className="object-cover object-[50%_65%]"
-              />
-              <Image
-                src="/icons/map-pin.svg"
-                alt=""
-                width={12}
-                height={15}
-                className="absolute top-23 left-37"
-              />
-            </div>
+            {contacts.mapCoordinates && (
+              <div className="relative h-56 w-97 overflow-hidden bg-white/5">
+                <iframe
+                  src={mapEmbedUrl(contacts.mapCoordinates, locale)}
+                  title={t("mapAlt")}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  // Darkened to sit in the footer like the original artwork
+                  className="size-full border-0 [filter:grayscale(1)_invert(0.92)_contrast(0.9)]"
+                />
+              </div>
+            )}
             <address className="mt-6 text-sm leading-[1.2] font-bold text-white/60 not-italic opacity-80">
-              {t("addressValue")}
+              {contacts.address}
             </address>
           </div>
         </div>
 
-        <SocialLinks className="mt-4 hidden lg:flex" />
+        <SocialLinks contacts={contacts} className="mt-4 hidden lg:flex" />
 
         <div className="mt-13 flex flex-col gap-2 border-t-[0.5px] border-white/60 pt-3 lg:mt-3 lg:flex-row lg:items-center lg:justify-between">
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs leading-[1.4] lg:gap-x-4 lg:text-sm lg:leading-[1.3] lg:font-bold">

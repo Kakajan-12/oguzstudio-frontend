@@ -1,8 +1,4 @@
 {
-  "Metadata": {
-    "title": "Oguz Studio",
-    "description": "Sergi stendleri, içki we daşky mahabat — konsepsiýadan gurnama çenli."
-  },
   "Navigation": {
     "home": "Baş sahypa",
     "about": "Biz barada",
@@ -20,34 +16,13 @@
   },
   "HomePage": {
     "hero": {
-      "title": "Gözden salyp bolmajak zatlary döredýäris",
-      "description": "Sergi stendleri, içki we daşky mahabat — konsepsiýadan gurnama çenli. Ünsi çekýän we brendiňizi güýçlendirýän wizual çözgütleri döredýäris.",
       "consultation": "Maslahat almak",
-      "explore": "Işlerimizi görmek",
-      "imageAlt": "Oguz Studio tarapyndan taýýarlanan sergi stendi"
+      "explore": "Işlerimizi görmek"
     },
     "about": {
-      "label": "Biz barada",
-      "title": "Pikirleri hakykata öwürýäris",
-      "paragraph1": "Oguz Studio — Aşgabatda ýerleşýän döredijilik önümçilik studiýasy. Biz ünsi çekmek isleýän brendler üçin sergi stendlerini, içki we daşky mahabaty hem-de wizual konsepsiýalary taslaýarys we döredýäris. Dizaýnerler, 3D suratkeşler, inženerler we gurnaýjylar bir topar bolup işleýär, şonuň üçin her taslamany ilkinji pikirden soňky gurnama çenli alyp barýarys.",
-      "paragraph2": "Güýçli wizual çözgüdiň müşderiniň maksatlaryna düşünmekden başlanýandygyna ynanýarys. Şonuň üçin her bir hyzmatdaşymyz bilen ýakyndan işleşip, hem batyrgaý, hem amala aşyryp boljak pikirleri hödürleýäris.",
-      "readMore": "Giňişleýin",
-      "imageAlt": "Oguz Studio tarapyndan taýýarlanan Adelaida uniwersitetiniň banneri"
-    },
-    "services": {
-      "label": "Hyzmatlarymyz",
-      "title": "Geljege niýetlenen çözgütler",
-      "description": "Sergi stendlerinden uly göwrümli mahabata çenli — pikirleri täsirli fiziki tejribä öwürýäris."
-    },
-    "clients": {
-      "label": "Müşderilerimiz we taslamalarymyz",
-      "title": "Dünýä ýetirýän pikirlerimiz",
-      "description": "Her taslama bir pikirden başlanýar. Biz ony güýçli fiziki we wizual tejribä öwürýäris."
+      "readMore": "Giňişleýin"
     },
     "contact": {
-      "label": "Habarlaşmak",
-      "title": "Pikiriňizi bile durmuşa geçireliň",
-      "description": "Sergi stendi, mahabat taslamasy ýa-da wizual konsepsiýa barada pikiriňiz barmy? Geliň, ara alyp maslahatlaşalyň. Toparymyz pikiriňizi täsirli çözgüde öwürmäge kömek eder.",
       "cta": "Maslahatlaşmaga başlamak"
     }
   },
@@ -80,39 +55,34 @@
     "related": "Bu kategoriýadan başga taslamalar"
   },
   "AboutPage": {
-    "title": "Biz barada",
-    "paragraph1": "Oguz Studio — pikirleri özboluşly fiziki we wizual çözgütlere öwürýän döredijilik we önümçilik kompaniýasy. Biz sergi stendleri, daşky we içki mahabat, 2D we 3D dizaýn, çaphana işleri, mahabat önümleri hem-de aýratyn wizual çözgütler bilen işleýäris. Döredijilik pikirlenişini we önümçilik mümkinçiliklerini birleşdirip, brendlere has güýçli we tanalýan keşp döretmäge kömek edýäris.",
-    "paragraph2": "Her bir taslama pikirden başlanýar, ýöne ony durmuşa geçirmek üçin diňe dizaýn ýeterlik däl. Biz täsirli hem-de maksada laýyk çözgütleri döretmek üçin strategiýany, döredijilik ugrukdyrmasyny, tehniki takyklygy we ygtybarly önümçiligi birleşdirýäris. Ilkinji konsepsiýadan we wizual işläp taýýarlamakdan başlap, önümçilige we soňky gurnama çenli ähli işi her bir jikme-jiklige üns berip alyp barýarys. Maksadymyz — pikiri düşnükli ýetirýän, daşky gurşawyna laýyk gelýän we uzak wagtlap ýatda galýan işleri döretmek.",
-    "gallery": {
-      "essen": "Oguz Studio tarapyndan taýýarlanan Essen bilbordy",
-      "workspace": "Oguz Studio ofisinde işleýän dizaýner",
-      "shop": "Oguz Studio tarapyndan bezelen dükan tekjeleri",
-      "gallery": "Oguz Studio tarapyndan bezelen sergi zaly"
-    },
-    "team": {
-      "title": "Pikirleri durmuşa geçirýän topar"
-    },
-    "brands": {
-      "title": "Biziň bilen işleýän brendler"
-    },
     "careers": {
-      "title": "Ajaýyp iş ajaýyp adamlardan başlanýar",
-      "description": "Ajaýyp işi jogapkärçiligi öz üstüne alýan we kämillige ymtylýan adamlar döredýär diýip ynanýarys. Oguz Studio-da hakyky taslamalar üstünde işläp, tejribäňizi artdyryp, many-mazmunly wizual çözgütlere goşant goşarsyňyz.",
-      "link": "Boş iş orunlaryny gör",
-      "imageAlt": "Oguz Studio topary stoluň başynda taslama üstünde işleýär"
+      "link": "Boş iş orunlaryny gör"
     }
   },
   "CareersPage": {
-    "title": "Iş orunlary",
-    "imageAlt": "Oguz Studio topary stoluň başynda taslamany ara alyp maslahatlaşýar",
-    "heading": "Ösmek we döretmek üçin ýer.",
-    "paragraph1": "Iň gowy işleri döredýän zatlaryna ünsli garaýan adamlar edýär diýip ynanýarys. Oguz Studio-da pikirleri manyly fiziki we wizual çözgütlere öwürmek üçin döredijilik pikirlenişini, tehniki tejribäni we ýokary jogapkärçiligi birleşdirýäris.",
-    "paragraph2": "Siz başlangyjy, takyklygy we işi gowy etmäge ymtylyşy gymmatlandyrýan adamlar bilen bilelikde işlärsiňiz. Toparymyzy öz işi üçin jogapkärçilik almaga, pikir teklip etmäge, meseleleri çözmäge we başarnyklaryny yzygiderli ösdürmäge höweslendirýäris. Her bir taslama täze bir zady öwrenmek, has uly jogapkärçilik almak we goşandyňyzyň netijäniň bir bölegine öwrülýändigini görmek üçin mümkinçilikdir.",
-    "paragraph3": "Dizaýn, önümçilik, brending ýa-da taslamalary amala aşyrmak bilen meşgullansaňyz-da, işiňiziň täsiri göze görünýär. Kompaniýa bilen bilelikde ösmek, özüne kynçylyk döretmek we buýsanyp boljak işleri döretmek isleýän adamlardan ybarat topar gurýarys.",
     "positions": {
-      "title": "Açyk iş orunlary",
       "requirements": "Talaplar",
       "apply": "Ýüz tutmak"
+    },
+    "applyForm": {
+      "fullName": "Adyňyz we familiýaňyz",
+      "email": "Email",
+      "phone": "Telefon belgisi",
+      "message": "Ugradyjy hat",
+      "resume": "Rezýume goşuň",
+      "resumeHint": "PDF, DOC ýa-da DOCX, 10 MB çenli",
+      "send": "Arzany ibermek",
+      "sending": "Iberilýär…",
+      "sent": "Sag boluň! Arzaňyz iberildi. Tejribäňiz bu wezipä laýyk gelse, siz bilen habarlaşarys.",
+      "close": "Ýapmak",
+      "errors": {
+        "rateLimit": "Örän köp haýyş. Bir sagatdan soň täzeden synanyşyň.",
+        "invalid": "Meýdanlary we faýly barlaň, soňra täzeden synanyşyň.",
+        "network": "Arzany ibermek başartmady. Soňrak synanyşyň.",
+        "fileMissing": "Rezýumäňizi goşuň.",
+        "fileType": "Rezýume PDF, DOC ýa-da DOCX görnüşinde bolmaly.",
+        "fileSize": "Faýl 10 MB-dan uly."
+      }
     }
   },
   "ContactsPage": {
@@ -127,8 +97,6 @@
       "viewOnMap": "Google Maps-da görmek"
     },
     "form": {
-      "title": "Taslamaňyzy ara alyp maslahatlaşalyň",
-      "subtitle": "Pikirleriňizi biziň bilen paýlaşyň, toparymyz jikme-jiklikleri we indiki ädimleri ara alyp maslahatlaşmak üçin 24 sagadyň dowamynda siziň bilen habarlaşar.",
       "firstName": "Adyňyz",
       "lastName": "Familiýaňyz",
       "email": "Email",
@@ -139,15 +107,13 @@
       "send": "Ugrat",
       "sent": "Sag boluň! 24 sagadyň dowamynda siziň bilen habarlaşarys.",
       "categories": {
-        "design": "2D & 3D dizaýn",
-        "exhibitionStands": "Sergi stendleri",
-        "outdoor": "Daşky mahabat",
-        "indoor": "Içki mahabat",
-        "branding": "Brending",
-        "production": "Çap we önümçilik",
-        "installation": "Gurnama",
-        "eventDecoration": "Çäreleri bezemek",
         "other": "Başga"
+      },
+      "sending": "Iberilýär…",
+      "errors": {
+        "rateLimit": "Örän köp haýyş. Bir sagatdan soň täzeden synanyşyň.",
+        "invalid": "Meýdanlary barlaň we täzeden synanyşyň.",
+        "network": "Haty ibermek başartmady. Soňrak synanyşyň."
       }
     }
   },
@@ -155,7 +121,6 @@
     "learnMore": "Giňişleýin",
     "contactUs": "Habarlaşmak",
     "address": "Salgy",
-    "addressValue": "Türkmenistan, Aşgabat, Bitaraplyk şaýoly 83",
     "email": "Email",
     "mapAlt": "Oguz Studio-nyň kartadaky ýerleşýän ýeri",
     "terms": "Ulanyş şertleri",

@@ -4,10 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { CONTACTS } from "@/shared/config/contacts";
 import { cn } from "@/shared/lib/cn";
-import { ArrowLink, Container } from "@/shared/ui";
+import { ArrowButton, Container } from "@/shared/ui";
 import type { Position } from "../model/types";
+import { ApplyForm } from "./ApplyForm";
 
 const TRANSITION = { duration: 0.4, ease: "easeOut" } as const;
 
@@ -21,15 +21,17 @@ function PositionMeta({ children }: { children: React.ReactNode }) {
 }
 
 type CareersPositionsProps = {
+  title: string;
   positions: Position[];
 };
 
 /** "Open Positions" accordion: one vacancy expanded at a time, the first one by default */
-export function CareersPositions({ positions }: CareersPositionsProps) {
+export function CareersPositions({ title, positions }: CareersPositionsProps) {
   const t = useTranslations("CareersPage.positions");
   const [activeId, setActiveId] = useState<string | null>(
     positions[0]?.id ?? null,
   );
+  const [applyingTo, setApplyingTo] = useState<Position | null>(null);
 
   const toggle = (id: string) => {
     setActiveId((current) => (current === id ? null : id));
@@ -39,14 +41,13 @@ export function CareersPositions({ positions }: CareersPositionsProps) {
     <section className="pb-[60px] lg:pb-[140px]">
       <Container>
         <h2 className="font-orbitron text-[32px] leading-[1.3] font-medium tracking-[-0.64px] text-balance text-black lg:text-[50px] lg:tracking-normal">
-          {t("title")}
+          {title}
         </h2>
 
         <ul className="mt-10 border-t border-line lg:mx-auto lg:mt-[52px] lg:max-w-[998px]">
           {positions.map((position) => {
             const isOpen = activeId === position.id;
             const panelId = `position-panel-${position.id}`;
-            const applyHref = `mailto:${CONTACTS.email}?subject=${encodeURIComponent(position.title)}`;
 
             return (
               <li
@@ -100,7 +101,7 @@ export function CareersPositions({ positions }: CareersPositionsProps) {
                   <div className="flex flex-col items-end gap-2 pb-5 lg:pb-7">
                     <div className="flex w-full flex-col gap-6">
                       <div className="flex flex-col gap-4">
-                        <p className="text-justify text-base leading-[1.75] text-black lg:leading-normal lg:tracking-[0.32px]">
+                        <p className="lg:text-justify text-base leading-[1.75] text-black lg:leading-normal lg:tracking-[0.32px]">
                           {position.description}
                         </p>
 
@@ -131,9 +132,9 @@ export function CareersPositions({ positions }: CareersPositionsProps) {
                       </p>
                     </div>
 
-                    <ArrowLink href={applyHref} widthClassName="w-[187px]">
+                    <ArrowButton onClick={() => setApplyingTo(position)} widthClassName="w-[187px]">
                       {t("apply")}
-                    </ArrowLink>
+                    </ArrowButton>
                   </div>
                 </motion.div>
               </li>
@@ -141,6 +142,8 @@ export function CareersPositions({ positions }: CareersPositionsProps) {
           })}
         </ul>
       </Container>
+
+      <ApplyForm position={applyingTo} onClose={() => setApplyingTo(null)} />
     </section>
   );
 }

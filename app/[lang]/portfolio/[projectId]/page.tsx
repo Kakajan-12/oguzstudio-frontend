@@ -1,19 +1,18 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getLocale, getTranslations } from "next-intl/server";
-import {
-  getPortfolioProjectIdsMock,
-  getPortfolioProjectMock,
-  ProjectPage,
-  ProjectPageSkeleton,
-} from "@/features/portfolio";
+import { getLocale } from "next-intl/server";
+import { ProjectPage, ProjectPageSkeleton } from "@/features/portfolio";
+import { getProject, getProjectIds } from "@/shared/api/content";
+import { pageTitle } from "@/shared/lib/metadata";
 
 type ProjectProps = {
   params: Promise<{ projectId: string }>;
 };
 
-export function generateStaticParams() {
-  return getPortfolioProjectIdsMock().map((projectId) => ({ projectId }));
+// Projects added later in the admin are rendered on first visit
+export async function generateStaticParams() {
+  const ids = await getProjectIds();
+  return ids.map((projectId) => ({ projectId }));
 }
 
 export async function generateMetadata({
@@ -21,11 +20,11 @@ export async function generateMetadata({
 }: ProjectProps): Promise<Metadata> {
   const { projectId } = await params;
   const locale = await getLocale();
-  const tMeta = await getTranslations("Metadata");
-  const project = getPortfolioProjectMock(projectId, locale);
+  const project = await getProject(projectId, locale);
 
   return {
-    title: project ? `${project.title} — ${tMeta("title")}` : tMeta("title"),
+    title: await pageTitle(project?.title ?? "", locale),
+    description: project?.description,
   };
 }
 

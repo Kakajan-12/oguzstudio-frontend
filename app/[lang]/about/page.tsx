@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import { AboutPage } from "@/features/about";
+import { getPageContent } from "@/shared/api/content";
+import { pageTitle } from "@/shared/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("AboutPage");
-  const tMeta = await getTranslations("Metadata");
+  const locale = await getLocale();
+  const { intro } = await getPageContent("about", locale);
 
   return {
-    title: `${t("title")} — ${tMeta("title")}`,
+    title: await pageTitle(intro.title, locale),
   };
 }
 

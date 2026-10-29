@@ -1,21 +1,24 @@
-import { useLocale } from "next-intl";
-import { Footer, Header } from "@/shared/ui";
-import { getPositionsMock } from "../mocks/positions";
+import { getLocale } from "next-intl/server";
+import { getPageContent, getPositions } from "@/shared/api/content";
 import { CareersCulture } from "./CareersCulture";
 import { CareersIntro } from "./CareersIntro";
 import { CareersPositions } from "./CareersPositions";
 
-export function CareersPage() {
-  const locale = useLocale();
-  // TODO: replace mocks with API data
-  const positions = getPositionsMock(locale);
+export async function CareersPage() {
+  const locale = await getLocale();
+  const [content, positions] = await Promise.all([
+    getPageContent("careers", locale),
+    getPositions(locale),
+  ]);
 
   return (
     <div className="relative flex flex-1 flex-col">
       <main className="flex-1">
-        <CareersIntro />
-        <CareersCulture />
-        <CareersPositions positions={positions} />
+        <CareersIntro content={content.intro} />
+        <CareersCulture content={content.intro} />
+        {positions.length > 0 && (
+          <CareersPositions title={content.positions.title} positions={positions} />
+        )}
       </main>
     </div>
   );

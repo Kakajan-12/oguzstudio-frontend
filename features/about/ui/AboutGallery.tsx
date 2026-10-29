@@ -1,29 +1,22 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import {
   motion,
   useAnimationFrame,
   useMotionValue,
   useReducedMotion,
 } from "motion/react";
-import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/cn";
+import { ContentImage } from "@/shared/ui/ContentImage";
 
-const SLIDES = [
-  { key: "essen", src: "/essen-billboard.webp", wide: false },
-  { key: "workspace", src: "/workspace.webp", wide: true },
-  { key: "shop", src: "/ghibli-shop.webp", wide: false },
-  { key: "gallery", src: "/gallery.webp", wide: true },
-] as const;
+export type GallerySlide = { src: string; alt: string; wide: boolean };
 
 /** Pixels per second */
 const SPEED = 60;
 
 /** Full-bleed strip of photos scrolling endlessly to the left, paused on hover */
-export function AboutGallery() {
-  const t = useTranslations("AboutPage.gallery");
+export function AboutGallery({ slides }: { slides: GallerySlide[] }) {
   const trackRef = useRef<HTMLUListElement>(null);
   const isPausedRef = useRef(false);
   const shouldReduceMotion = useReducedMotion();
@@ -41,9 +34,9 @@ export function AboutGallery() {
   });
 
   const renderSet = (isCopy: boolean) =>
-    SLIDES.map(({ key, src, wide }) => (
+    slides.map(({ src, alt, wide }, index) => (
       <li
-        key={`${key}-${isCopy ? "copy" : "original"}`}
+        key={`${index}-${isCopy ? "copy" : "original"}`}
         aria-hidden={isCopy || undefined}
         // Spacing lives on the item (not as flex gap) so both halves of the track are equal
         className="shrink-0 pr-2 lg:pr-4"
@@ -54,9 +47,9 @@ export function AboutGallery() {
             wide ? "w-[320px] lg:w-[488px]" : "w-[196px] lg:w-[300px]",
           )}
         >
-          <Image
+          <ContentImage
             src={src}
-            alt={isCopy ? "" : t(key)}
+            alt={isCopy ? "" : alt}
             fill
             sizes={wide ? "(min-width: 1024px) 488px, 320px" : "(min-width: 1024px) 300px, 196px"}
             className="object-cover"

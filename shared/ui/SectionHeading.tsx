@@ -37,7 +37,7 @@ export function SectionHeading({
         {description && (
           <p
             className={cn(
-              "max-w-56 text-justify text-sm lg:max-w-85 lg:shrink-0 lg:text-lg",
+              "max-w-80 text-sm lg:max-w-85 lg:shrink-0 lg:text-justify lg:text-lg",
               textColor,
             )}
           >

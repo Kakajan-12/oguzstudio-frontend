@@ -1,22 +1,22 @@
 "use client";
 
 import { useTransition } from "react";
-import { Dropdown, type MenuProps } from "antd";
 import { hasLocale, useLocale, useTranslations, type Locale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/shared/lib/cn";
 
 type LanguageSwitcherProps = {
-  /** `dropdown` for the desktop header, `inline` lists every locale as a button */
-  variant?: "dropdown" | "inline";
+  /** `compact` for the desktop header (styled like the nav links), `inline` for the mobile menu */
+  variant?: "compact" | "inline";
   theme?: "light" | "dark";
   className?: string;
   onChange?: () => void;
 };
 
+/** All three locales are always visible: one click to switch, no dropdown */
 export function LanguageSwitcher({
-  variant = "dropdown",
+  variant = "compact",
   theme = "light",
   className,
   onChange,
@@ -28,7 +28,7 @@ export function LanguageSwitcher({
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
-  const changeLocale = (next: string) => {
+  const changeLocale = (next: Locale) => {
     if (!hasLocale(routing.locales, next) || next === locale) return;
     onChange?.();
     startTransition(() => {
@@ -36,73 +36,55 @@ export function LanguageSwitcher({
     });
   };
 
-  const textColor = theme === "dark" ? "text-white" : "text-dark";
-
-  if (variant === "inline") {
-    return (
-      <div
-        role="group"
-        aria-label={tNav("language")}
-        className={cn("flex items-center gap-2", className)}
-      >
-        {routing.locales.map((item: Locale) => {
-          const isActive = item === locale;
-          return (
-            <button
-              key={item}
-              type="button"
-              lang={item}
-              aria-pressed={isActive}
-              title={t(item)}
-              disabled={isPending}
-              onClick={() => changeLocale(item)}
-              className={cn(
-                "h-10 min-w-12 rounded-[2px] border px-3 text-sm font-medium uppercase tracking-[0.28px] transition-colors",
-                isActive
-                  ? "border-white bg-white text-dark"
-                  : "border-white/40 text-white hover:border-white",
-              )}
-            >
-              {item}
-            </button>
-          );
-        })}
-      </div>
-    );
-  }
-
-  const items: MenuProps["items"] = routing.locales.map((item) => ({
-    key: item,
-    label: <span lang={item}>{t(item)}</span>,
-  }));
+  const isDark = theme === "dark";
 
   return (
-    <Dropdown
-      trigger={["click"]}
-      placement="bottomRight"
-      menu={{
-        items,
-        selectable: true,
-        selectedKeys: [locale],
-        onClick: ({ key }) => changeLocale(key),
-      }}
+    <div
+      role="group"
+      aria-label={tNav("language")}
+      aria-busy={isPending || undefined}
+      className={cn(
+        "flex items-center",
+        variant === "compact" ? "gap-1" : "gap-2",
+        isPending && "opacity-60",
+        className,
+      )}
     >
-      <button
-        type="button"
-        aria-label={tNav("language")}
-        disabled={isPending}
-        className={cn(
-          "flex items-center gap-2 text-sm leading-none font-medium uppercase tracking-[0.28px] transition-opacity hover:opacity-70",
-          textColor,
-          className,
-        )}
-      >
-        {locale}
-        <span
-          aria-hidden
-          className="mb-0.5 size-1.5 rotate-45 border-r border-b border-current"
-        />
-      </button>
-    </Dropdown>
+      {routing.locales.map((item: Locale) => {
+        const isActive = item === locale;
+        return (
+          <button
+            key={item}
+            type="button"
+            lang={item}
+            aria-pressed={isActive}
+            title={t(item)}
+            disabled={isPending}
+            onClick={() => changeLocale(item)}
+            className={cn(
+              "text-sm leading-none font-medium uppercase tracking-[0.28px] transition-colors",
+              variant === "compact"
+                ? cn(
+                    "relative cursor-pointer rounded-[2px] px-2 py-2.5",
+                    isDark
+                      ? "text-white hover:bg-white hover:text-dark"
+                      : "text-dark hover:bg-dark hover:text-white",
+                    isActive
+                      ? "after:absolute after:inset-x-2 after:bottom-1 after:h-px after:bg-current"
+                      : "opacity-45 hover:opacity-100",
+                  )
+                : cn(
+                    "h-10 min-w-12 cursor-pointer rounded-[2px] border px-3",
+                    isActive
+                      ? "border-white bg-white text-dark"
+                      : "border-white/40 text-white hover:border-white",
+                  ),
+            )}
+          >
+            {item}
+          </button>
+        );
+      })}
+    </div>
   );
 }

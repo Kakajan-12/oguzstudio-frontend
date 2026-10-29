@@ -1,27 +1,31 @@
-import { useLocale } from "next-intl";
-import { Footer, Header } from "@/shared/ui";
-import { getClientProjectsMock } from "../mocks/clients";
-import { getServicesMock } from "../mocks/services";
+import { getLocale } from "next-intl/server";
+import {
+  getFeaturedProjects,
+  getPageContent,
+  getServices,
+} from "@/shared/api/content";
 import { AboutSection } from "./AboutSection";
 import { ClientsSection } from "./ClientsSection";
 import { ContactSection } from "./ContactSection";
 import { HeroSection } from "./HeroSection";
 import { ServicesSection } from "./ServicesSection";
 
-export function HomePage() {
-  const locale = useLocale();
-  // TODO: replace mocks with API data
-  const services = getServicesMock(locale);
-  const clients = getClientProjectsMock(locale);
+export async function HomePage() {
+  const locale = await getLocale();
+  const [content, services, clients] = await Promise.all([
+    getPageContent("home", locale),
+    getServices(locale),
+    getFeaturedProjects(locale),
+  ]);
 
   return (
     <div className="relative flex flex-1 flex-col">
       <main className="flex-1 ">
-        <HeroSection />
-        <AboutSection />
-        <ServicesSection services={services} />
-        <ClientsSection clients={clients} />
-        <ContactSection />
+        <HeroSection content={content.hero} />
+        <AboutSection content={content.about} />
+        <ServicesSection content={content.services} services={services} />
+        <ClientsSection content={content.clients} clients={clients} />
+        <ContactSection content={content.contact} />
       </main>
     </div>
   );

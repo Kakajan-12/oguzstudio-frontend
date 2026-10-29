@@ -7,7 +7,7 @@ import { cn } from "@/shared/lib/cn";
 import type { FilterOption } from "../model/types";
 
 const controlClassName =
-  "flex h-10 min-w-0 cursor-pointer items-center justify-between rounded-[2px] border border-stroke px-4 text-sm leading-none font-medium tracking-[0.28px] text-black transition-colors hover:border-dark";
+  "flex h-10 min-w-0 cursor-pointer items-center justify-between rounded-[2px] border border-stroke px-3 text-sm lg:px-4 leading-none font-medium tracking-[0.28px] text-black transition-colors hover:border-dark";
 
 type PortfolioFilterProps = {
   label: string;
@@ -44,7 +44,7 @@ export function PortfolioFilter({
         },
       }}
     >
-      <button type="button" className={cn(controlClassName, "gap-2", className)}>
+      <button type="button" className={cn(controlClassName, "gap-1.5 lg:gap-2", className)}>
         <span className="truncate">{label}</span>
         <span className="flex h-[8.5px] w-3 shrink-0 items-center justify-center">
           <Image

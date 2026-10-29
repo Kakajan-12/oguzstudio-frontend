@@ -1,12 +1,9 @@
-import { useLocale } from "next-intl";
-import { Footer, Header } from "@/shared/ui";
-import { getPortfolioProjectsMock } from "../mocks/projects";
+import { getLocale } from "next-intl/server";
+import { getProjects } from "@/shared/api/content";
 import { PortfolioSection } from "./PortfolioSection";
 
-export function PortfolioPage() {
-  const locale = useLocale();
-  // TODO: replace mocks with API data
-  const projects = getPortfolioProjectsMock(locale);
+export async function PortfolioPage() {
+  const projects = await getProjects(await getLocale());
 
   return (
     <div className="relative flex flex-1 flex-col">

@@ -84,6 +84,7 @@ export function ArrowLink({
 
 type ArrowButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   theme?: SectionTheme;
+  widthClassName?: string;
 };
 
 /** The same underlined arrow control rendered as a button, e.g. a form submit */
@@ -91,6 +92,7 @@ export function ArrowButton({
   theme = "light",
   type = "button",
   className,
+  widthClassName,
   children,
   ...props
 }: ArrowButtonProps) {
@@ -102,6 +104,7 @@ export function ArrowButton({
       className={getArrowClassName(
         isDark,
         cn("cursor-pointer disabled:cursor-not-allowed disabled:opacity-40", className),
+        widthClassName,
       )}
       {...props}
     >
