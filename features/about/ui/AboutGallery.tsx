@@ -51,7 +51,11 @@ export function AboutGallery({ slides }: { slides: GallerySlide[] }) {
             src={src}
             alt={isCopy ? "" : alt}
             fill
-            sizes={wide ? "(min-width: 1024px) 488px, 320px" : "(min-width: 1024px) 300px, 196px"}
+            sizes={
+              wide
+                ? "(min-width: 1024px) 488px, 320px"
+                : "(min-width: 1024px) 300px, 196px"
+            }
             className="object-cover"
           />
         </div>
@@ -61,7 +65,7 @@ export function AboutGallery({ slides }: { slides: GallerySlide[] }) {
   return (
     <section
       className={cn(
-        "mt-[52px] pb-[60px] lg:mt-20 lg:pb-[140px]",
+        "mt-13 pb-15 lg:mt-20 lg:pb-35",
         shouldReduceMotion ? "overflow-x-auto" : "overflow-hidden",
       )}
     >

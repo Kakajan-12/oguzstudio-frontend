@@ -21,8 +21,8 @@ const BASE_TOKENS: SegmentedTokens = {
   borderRadius: 10,
   borderRadiusSM: 8,
   boxShadowTertiary: "none",
-  itemSelectedBg: "#ffffff",
-  itemSelectedColor: "#0f0f0f",
+  itemSelectedBg: "#3D3D3D",
+  itemSelectedColor: "#ffffff",
 };
 
 const THEME_TOKENS: Record<SwitcherTheme, SegmentedTokens> = {
@@ -37,8 +37,8 @@ const THEME_TOKENS: Record<SwitcherTheme, SegmentedTokens> = {
   // Sits on the #0f0f0f drawer, mirrors its white/60 inactive nav links
   dark: {
     ...BASE_TOKENS,
-    trackBg: "rgba(255, 255, 255, 0.12)",
-    itemColor: "rgba(255, 255, 255, 0.6)",
+    trackBg: "#212121",
+    itemColor: "#FFFFFFB2",
     itemHoverColor: "#ffffff",
     itemHoverBg: "rgba(255, 255, 255, 0.08)",
     itemActiveBg: "rgba(255, 255, 255, 0.16)",
@@ -81,7 +81,7 @@ export function LanguageSwitcher({
         aria-busy={isPending}
         className={className}
         classNames={{
-          item: "min-w-12",
+          item: "min-w-9",
           label: "font-medium tracking-[0.28px]",
         }}
         options={SWITCHER_LOCALES.map((item) => ({
