@@ -5,36 +5,36 @@ import { ConfigProvider, Segmented, type ThemeConfig } from "antd";
 import { useLocale, useTranslations, type Locale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 
-type SwitcherTheme = "light" | "dark";
+type SwitcherTheme = "light" | "muted" | "dark";
 
-/** Only these locales are offered in the switcher; `tk` stays reachable by URL */
 const SWITCHER_LOCALES = ["en", "ru"] satisfies Locale[];
 
 type SegmentedTokens = NonNullable<
   NonNullable<ThemeConfig["components"]>["Segmented"]
 >;
 
-// 36px pill: 4px inset track, so the flat white thumb comes out 28px tall
 const BASE_TOKENS: SegmentedTokens = {
   controlHeight: 36,
   trackPadding: 4,
   borderRadius: 10,
   borderRadiusSM: 8,
   boxShadowTertiary: "none",
-  itemSelectedBg: "#3D3D3D",
-  itemSelectedColor: "#ffffff",
+  itemSelectedBg: "#ffffff",
+  itemSelectedColor: "#111111",
+};
+
+const LIGHT_TOKENS: SegmentedTokens = {
+  ...BASE_TOKENS,
+  trackBg: "#FFFFFFCC",
+  itemColor: "#111111B2",
+  itemHoverColor: "#0f0f0f",
+  itemHoverBg: "rgba(15, 15, 15, 0.05)",
+  itemActiveBg: "rgba(15, 15, 15, 0.1)",
 };
 
 const THEME_TOKENS: Record<SwitcherTheme, SegmentedTokens> = {
-  light: {
-    ...BASE_TOKENS,
-    trackBg: "#eeeeee",
-    itemColor: "#0f0f0f",
-    itemHoverColor: "#0f0f0f",
-    itemHoverBg: "rgba(15, 15, 15, 0.05)",
-    itemActiveBg: "rgba(15, 15, 15, 0.1)",
-  },
-  // Sits on the #0f0f0f drawer, mirrors its white/60 inactive nav links
+  light: LIGHT_TOKENS,
+  muted: { ...LIGHT_TOKENS, trackBg: "#F0F0F0" },
   dark: {
     ...BASE_TOKENS,
     trackBg: "#212121",

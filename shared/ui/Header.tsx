@@ -29,12 +29,15 @@ export function Header({ socials, className }: HeaderProps) {
   const closeMenu = () => setIsMenuOpen(false);
   const isHomePage = pathname === "/";
   const isScrolled = useScrolled(8);
-  // Home opens with a dark hero: the header is transparent with a white logo only at the very top.
-  // Other pages start on white, so the header is solid right away and content never shows through.
   const isOverHero = isHomePage && !isScrolled;
 
   const renderLogo = (src: string, className?: string) => (
-    <Link href="/" aria-label="Oguz Studio" onClick={closeMenu} className={className}>
+    <Link
+      href="/"
+      aria-label="Oguz Studio"
+      onClick={closeMenu}
+      className={className}
+    >
       <Image
         src={src}
         alt="Oguz Studio"
@@ -50,11 +53,7 @@ export function Header({ socials, className }: HeaderProps) {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-20 transition-[background-color,box-shadow] duration-200",
-        // Between lg and xl the desktop nav reaches the dark half of the hero, where its dark links
-        // would disappear, so there the header stays solid even at the top (CSS only: no flash)
-        isOverHero
-          ? "bg-transparent lg:max-xl:bg-white/80 lg:max-xl:backdrop-blur-md"
-          : "bg-white/80 backdrop-blur-md",
+        isOverHero ? "bg-transparent" : "bg-white/80 backdrop-blur-md",
         isScrolled && "shadow-[0_1px_0_rgba(15,15,15,0.08)]",
         className,
       )}
@@ -62,8 +61,8 @@ export function Header({ socials, className }: HeaderProps) {
       <Container className="flex h-15 items-center justify-between lg:h-auto lg:py-4">
         {isOverHero ? (
           <>
-            {renderLogo("/logo.svg", "lg:max-xl:hidden")}
-            {renderLogo("/logo-dark.svg", "hidden lg:max-xl:block")}
+            {renderLogo("/logo.svg", "")}
+            {renderLogo("/logo-dark.svg", "hidden")}
           </>
         ) : (
           renderLogo("/logo-dark.svg")
@@ -80,10 +79,10 @@ export function Header({ socials, className }: HeaderProps) {
                     href={href}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "relative block rounded-[2px] px-3 py-2.5 text-sm leading-none uppercase tracking-[0.28px] text-dark transition-colors duration-200",
+                      "relative block rounded-xs px-1 xl:px-3 py-2.5 text-sm leading-none uppercase tracking-[0.28px] text-dark transition-colors duration-200",
                       "hover:bg-dark hover:text-white focus-visible:bg-dark focus-visible:text-white focus-visible:outline-none",
                       isActive &&
-                        "font-medium after:absolute after:inset-x-4 after:bottom-1 after:h-px after:bg-current",
+                        "font-medium after:absolute after:inset-x-2 xl:after:inset-x-4 after:bottom-1 after:h-px after:bg-current",
                     )}
                   >
                     {t(key)}
@@ -92,7 +91,10 @@ export function Header({ socials, className }: HeaderProps) {
               );
             })}
           </ul>
-          <LanguageSwitcher className="border-l border-dark/15 pl-4" />
+          <LanguageSwitcher
+            theme={isHomePage ? "light" : "muted"}
+            className=" pl-4"
+          />
         </nav>
 
         <button
@@ -126,7 +128,7 @@ export function Header({ socials, className }: HeaderProps) {
         }}
       >
         <div className="flex min-h-full flex-col">
-          <div className="flex h-[60px] shrink-0 items-center justify-between px-4">
+          <div className="flex h-15 shrink-0 items-center justify-between px-4">
             {renderLogo("/logo.svg")}
             <button
               type="button"

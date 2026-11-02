@@ -20,7 +20,7 @@ function FooterColumn({ title, className, children }: FooterColumnProps) {
       <p className="font-orbitron text-sm leading-none font-medium lg:font-bold">
         {title}
       </p>
-      <ul className="mt-6 flex flex-col gap-[18px] text-sm leading-[1.2] lg:mt-5 lg:gap-0 lg:leading-9 lg:font-bold">
+      <ul className="mt-6 flex flex-col gap-4.5 text-sm leading-[1.2] lg:mt-5 lg:gap-0 lg:leading-9 lg:font-bold">
         {children}
       </ul>
     </div>

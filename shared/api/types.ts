@@ -8,7 +8,12 @@ export type PageContent = {
     seo: { title: string; description: string };
   };
   home: {
-    hero: { title: string; description: string; image: Image; imageAlt: string };
+    hero: {
+      title: string;
+      description: string;
+      image: Image;
+      imageAlt: string;
+    };
     about: {
       label: string;
       title: string;
@@ -35,7 +40,12 @@ export type PageContent = {
     };
     team: { title: string };
     brands: { title: string };
-    careers: { title: string; description: string; image: Image; imageAlt: string };
+    careers: {
+      title: string;
+      description: string;
+      image: Image;
+      imageAlt: string;
+    };
   };
   careers: {
     intro: {

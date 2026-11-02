@@ -1,6 +1,7 @@
 import { getLocale } from "next-intl/server";
 import { ServicesAccordion } from "@/features/home/ui/ServicesAccordion";
 import { getBrands, getPageContent, getServices, getTeam } from "@/shared/api/content";
+import { Container } from "@/shared/ui";
 import { AboutBrands } from "./AboutBrands";
 import { AboutCareers } from "./AboutCareers";
 import { AboutGallery, type GallerySlide } from "./AboutGallery";
@@ -30,7 +31,9 @@ export async function AboutPage() {
       <main className="flex-1">
         <AboutIntro content={content.intro} />
         {slides.length > 0 && <AboutGallery slides={slides} />}
-        <ServicesAccordion services={services} className="mt-10 lg:mt-[52px]" />
+        <Container>
+          <ServicesAccordion services={services} className="mt-10 lg:mt-[52px]" />
+        </Container>
         {team.length > 0 && <AboutTeam title={content.team.title} members={team} />}
         {brands.length > 0 && <AboutBrands title={content.brands.title} brands={brands} />}
         <AboutCareers content={content.careers} />
