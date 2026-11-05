@@ -54,8 +54,9 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
                 key={`${src}-${index}`}
                 className={cn(
                   "w-[78%] shrink-0 snap-start sm:w-[45%]",
-                  "lg:w-auto lg:min-w-0 lg:flex-[1_1_0%] lg:transition-[flex-grow,flex-basis] lg:duration-500 lg:ease-out motion-reduce:transition-none",
-                  isActive && "lg:flex-[0_0_50vw]",
+                  "lg:w-auto lg:min-w-0 lg:transition-[flex-grow,flex-basis] lg:duration-500 lg:ease-out motion-reduce:transition-none",
+                  // cn() doesn't dedupe conflicting utilities, so only one flex class may be present at a time
+                  isActive ? "lg:flex-[0_0_50vw]" : "lg:flex-[1_1_0%]",
                 )}
               >
                 <button
