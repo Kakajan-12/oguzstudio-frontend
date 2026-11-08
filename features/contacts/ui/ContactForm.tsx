@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Modal } from "antd";
 import { useLocale, useTranslations } from "next-intl";
 import type { FilterOption } from "@/features/portfolio/model/types";
 import { sendContactRequest, SubmitFailed, type SubmitError } from "@/shared/api/forms";
@@ -17,6 +18,7 @@ type ContactFormProps = {
 
 export function ContactForm({ categories, className }: ContactFormProps) {
   const t = useTranslations("ContactsPage.form");
+  const tApply = useTranslations("CareersPage.applyForm");
   const locale = useLocale();
   const [category, setCategory] = useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
@@ -126,11 +128,6 @@ export function ContactForm({ categories, className }: ContactFormProps) {
       <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <ReCaptcha key={captchaKey} onChange={setCaptchaToken} />
         <div className="flex flex-col gap-4 lg:ml-auto lg:items-end">
-          {status === "sent" && (
-            <p role="status" className="text-sm leading-[1.4] text-muted">
-              {t("sent")}
-            </p>
-          )}
           {error && (
             <p role="alert" className="text-sm leading-[1.4] text-red-600">
               {t(`errors.${error}`)}
@@ -145,6 +142,15 @@ export function ContactForm({ categories, className }: ContactFormProps) {
           </ArrowButton>
         </div>
       </div>
+
+      <Modal open={status === "sent"} onCancel={() => setStatus("idle")} footer={null} centered width={480}>
+        <div className="flex flex-col items-start gap-6 py-6">
+          <p role="status" className="text-base leading-normal text-black">
+            {t("sent")}
+          </p>
+          <ArrowButton onClick={() => setStatus("idle")}>{tApply("close")}</ArrowButton>
+        </div>
+      </Modal>
     </form>
   );
 }
