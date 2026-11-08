@@ -28,16 +28,7 @@ export type PageContent = {
   };
   about: {
     intro: { title: string; paragraph1: string; paragraph2: string };
-    gallery: {
-      image1: Image;
-      image1Alt: string;
-      image2: Image;
-      image2Alt: string;
-      image3: Image;
-      image3Alt: string;
-      image4: Image;
-      image4Alt: string;
-    };
+    gallery: { images: string[] };
     team: { title: string };
     brands: { title: string };
     careers: {

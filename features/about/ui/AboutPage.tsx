@@ -17,14 +17,12 @@ export async function AboutPage() {
     getBrands(),
   ]);
 
-  const { gallery } = content;
-  // Even slots are the wide photos
-  const slides: GallerySlide[] = [
-    { src: gallery.image1, alt: gallery.image1Alt, wide: false },
-    { src: gallery.image2, alt: gallery.image2Alt, wide: true },
-    { src: gallery.image3, alt: gallery.image3Alt, wide: false },
-    { src: gallery.image4, alt: gallery.image4Alt, wide: true },
-  ].filter((slide): slide is GallerySlide => Boolean(slide.src));
+  // Every second photo is wide
+  const slides: GallerySlide[] = content.gallery.images.map((src, index) => ({
+    src,
+    alt: `Oguz Studio — ${content.intro.title}`,
+    wide: index % 2 === 1,
+  }));
 
   return (
     <div className="relative flex flex-1 flex-col">
