@@ -9,7 +9,6 @@ type ProjectProps = {
   params: Promise<{ projectId: string }>;
 };
 
-// Projects added later in the admin are rendered on first visit
 export async function generateStaticParams() {
   const ids = await getProjectIds();
   return ids.map((projectId) => ({ projectId }));

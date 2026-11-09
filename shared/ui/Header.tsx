@@ -18,7 +18,6 @@ function isActivePath(pathname: string, href: string) {
 }
 
 type HeaderProps = {
-  /** Social links for the mobile menu, from the contacts set in the admin */
   socials: SocialLink[];
   className?: string;
 };

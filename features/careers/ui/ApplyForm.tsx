@@ -28,7 +28,6 @@ type ApplyFormProps = {
   onClose: () => void;
 };
 
-/** Job application with a resume; the API emails it to the team */
 export function ApplyForm({ position, onClose }: ApplyFormProps) {
   const t = useTranslations("CareersPage.applyForm");
   const locale = useLocale();
@@ -42,7 +41,6 @@ export function ApplyForm({ position, onClose }: ApplyFormProps) {
 
   const close = () => {
     onClose();
-    // Reset after the closing animation
     setTimeout(() => {
       setStatus("idle");
       setError(null);
@@ -113,7 +111,6 @@ export function ApplyForm({ position, onClose }: ApplyFormProps) {
                 type="file"
                 name="resume"
                 accept={ACCEPT}
-                // Checked in handleSubmit: the native bubble would point at the visually hidden input
                 className="peer sr-only"
                 onChange={(event) => setFileName(event.target.files?.[0]?.name ?? "")}
               />

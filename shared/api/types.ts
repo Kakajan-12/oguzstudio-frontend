@@ -1,7 +1,5 @@
 import type { LegalKey } from "@/shared/config/navigation";
 import type { SocialNetwork } from "@/shared/config/socials";
-// Shapes of GET /api/pages/:page — fields are defined in backend/src/pages/registry.ts.
-// Texts arrive already translated; image fields are absolute URLs (or null when not set).
 
 type Image = string | null;
 
@@ -67,7 +65,6 @@ export type CompanyContacts = {
   emails: string[];
   address: string;
   googleMapsUrl: string;
-  /** "lat, lng" for the footer map; empty hides it */
   mapCoordinates: string;
   socials: SocialLink[];
 };

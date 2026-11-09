@@ -11,7 +11,6 @@ import { FormField, FormTextarea } from "./FormField";
 import { RECAPTCHA_SITE_KEY, ReCaptcha } from "./ReCaptcha";
 
 type ContactFormProps = {
-  /** Services from the admin; "Other" is added here */
   categories: FilterOption[];
   className?: string;
 };

@@ -30,7 +30,6 @@ function FooterColumn({ title, className, children }: FooterColumnProps) {
 
 const linkClassName = "opacity-80 transition-opacity hover:opacity-100";
 
-/** Keyless Google Maps embed centered on "lat, lng" from the admin settings */
 function mapEmbedUrl(coordinates: string, locale: string) {
   const query = coordinates.replace(/\s+/g, "");
   return `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=16&hl=${locale}&output=embed`;
@@ -116,7 +115,6 @@ export async function Footer({ className }: { className?: string }) {
                   title={t("mapAlt")}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  // Darkened to sit in the footer like the original artwork
                   className="size-full border-0 [filter:grayscale(1)_invert(0.92)_contrast(0.9)]"
                 />
               </div>

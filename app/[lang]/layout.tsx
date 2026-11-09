@@ -10,7 +10,6 @@ import AntProviders from "@/providers/AntProvider";
 import QueryProviders from "@/providers/query";
 import "./globals.css";
 import { Header } from "@/shared/ui";
-// Server-only (fetches contacts), so it is not part of the shared/ui barrel used by client components
 import { Footer } from "@/shared/ui/Footer";
 import { Suspense } from "react";
 

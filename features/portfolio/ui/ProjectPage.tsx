@@ -12,7 +12,6 @@ export async function ProjectPage({ projectId }: { projectId: string }) {
   const project = await getProject(projectId, await getLocale());
   if (!project) notFound();
 
-  // The API returns other projects of the same category
   const related = project.related.slice(0, RELATED_COUNT);
 
   return (

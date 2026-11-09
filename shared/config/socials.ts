@@ -1,4 +1,3 @@
-/** Networks the admin can pick from; the keys match the API */
 export const SOCIAL_NETWORKS = {
   instagram: { name: "Instagram", icon: "/icons/instagram.svg", width: 22, height: 22 },
   tiktok: { name: "TikTok", icon: "/icons/tiktok.svg", width: 20, height: 24 },

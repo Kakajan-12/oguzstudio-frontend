@@ -13,7 +13,6 @@ import type { CompanyContacts, PageContent, PageKey } from "./types";
 
 const API_URL = (process.env.API_URL ?? "http://localhost:4000").replace(/\/$/, "");
 
-/** Tag shared by all content; the API revalidates it after every change in the admin (see app/api/revalidate) */
 export const CONTENT_TAG = "content";
 
 class NotFoundError extends Error {}
@@ -29,7 +28,6 @@ async function apiGet<T>(path: string, locale?: Locale): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-// Each getter is cached per arguments. "hours" is a safety net in case a revalidation call is missed.
 
 export async function getPageContent<K extends PageKey>(page: K, locale: Locale) {
   "use cache";
@@ -52,7 +50,6 @@ export async function getServices(locale: Locale) {
   return apiGet<Service[]>("/services", locale);
 }
 
-/** Contact form "Category" options (services); the form adds "Other" itself */
 export async function getServiceCategories(locale: Locale) {
   "use cache";
   cacheTag(CONTENT_TAG);
@@ -83,7 +80,6 @@ export async function getProjectIds() {
 
 export type ProjectWithRelated = PortfolioProjectDetails & { related: PortfolioProject[] };
 
-/** null when the project doesn't exist or is hidden */
 export async function getProject(id: string, locale: Locale) {
   "use cache";
   cacheTag(CONTENT_TAG);

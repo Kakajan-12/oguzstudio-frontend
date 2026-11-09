@@ -9,7 +9,6 @@ const matches = (value: string) =>
   value.length === secret.length &&
   timingSafeEqual(Buffer.from(value), Buffer.from(secret));
 
-/** Called by the API after every content change in the admin, so the site shows it right away */
 export async function POST(request: Request) {
   if (!matches(request.headers.get("x-revalidate-secret") ?? "")) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });

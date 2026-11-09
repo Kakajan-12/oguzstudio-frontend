@@ -6,7 +6,6 @@ import { Container } from "@/shared/ui";
 
 const HEADING_PREFIX = /^#\s+/;
 
-/** Plain text from the admin: blank lines split paragraphs, a block starting with "# " is a subheading */
 function LegalBody({ content }: { content: string }) {
   const blocks = content
     .split(/\n\s*\n/)

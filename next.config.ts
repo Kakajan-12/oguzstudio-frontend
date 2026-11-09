@@ -12,9 +12,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
-    // Content images are uploaded through the admin and served by the API
     remotePatterns: [new URL(`${apiUrl.origin}/uploads/**`)],
-    // Only for local development, when the API runs on this machine
     dangerouslyAllowLocalIP: isLocalApi,
   },
   turbopack: {

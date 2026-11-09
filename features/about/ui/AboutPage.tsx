@@ -17,7 +17,6 @@ export async function AboutPage() {
     getBrands(),
   ]);
 
-  // Every second photo is wide
   const slides: GallerySlide[] = content.gallery.images.map((src, index) => ({
     src,
     alt: `Oguz Studio — ${content.intro.title}`,
