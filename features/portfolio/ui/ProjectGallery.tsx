@@ -8,6 +8,7 @@ import { Container } from "@/shared/ui";
 import { cn } from "@/shared/lib/cn";
 
 const DESKTOP_QUERY = "(min-width: 1024px)";
+const HOVER_QUERY = `${DESKTOP_QUERY} and (hover: hover) and (pointer: fine)`;
 
 type ProjectGalleryProps = {
   title: string;
@@ -19,8 +20,8 @@ function formatIndex(index: number) {
 }
 
 /**
- * Row of narrow photos. On desktop a click widens the photo to half of the screen (a second click collapses it),
- * on mobile the photo opens in a fullscreen viewer instead
+ * Row of narrow photos. On desktop hovering or clicking widens the photo to half of the screen (a second click
+ * or leaving the row collapses it), on mobile the photo opens in a fullscreen viewer instead
  */
 export function ProjectGallery({ title, images }: ProjectGalleryProps) {
   const t = useTranslations("ProjectPage.gallery");
@@ -29,6 +30,19 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
   const total = formatIndex(images.length);
 
   const getAlt = (index: number) => t("imageAlt", { title, index: index + 1 });
+
+  // Touch screens emulate mouseenter on tap, so hover-to-expand is limited to real pointers
+  const handleMouseEnter = (index: number) => {
+    if (window.matchMedia(HOVER_QUERY).matches) {
+      setActiveIndex(index);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (window.matchMedia(HOVER_QUERY).matches) {
+      setActiveIndex(null);
+    }
+  };
 
   const handleClick = (index: number) => {
     if (window.matchMedia(DESKTOP_QUERY).matches) {
@@ -44,7 +58,11 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
     <section className="mt-14 lg:mt-20">
       <Container>
         {/* Below lg a swipeable strip: squeezing every photo into one row leaves unreadable slivers */}
-        <ul className="-mx-4 flex h-[360px] snap-x snap-mandatory scroll-px-4 gap-2 overflow-x-auto px-4 [scrollbar-width:none] lg:mx-0 lg:h-[640px] lg:snap-none lg:gap-3 lg:overflow-visible lg:px-0">
+        {/* Collapse on leaving the whole row, not each item: the gaps between photos would make it flicker */}
+        <ul
+          onMouseLeave={handleMouseLeave}
+          className="-mx-4 flex h-90 snap-x snap-mandatory scroll-px-4 gap-2 overflow-x-auto px-4 scrollbar-none lg:mx-0 lg:h-160 lg:snap-none lg:gap-3 lg:overflow-visible lg:px-0"
+        >
           {images.map((src, index) => {
             const isActive = index === activeIndex;
             const number = index + 1;
@@ -52,20 +70,22 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
             return (
               <li
                 key={`${src}-${index}`}
+                onMouseEnter={() => handleMouseEnter(index)}
                 className={cn(
                   "w-[78%] shrink-0 snap-start sm:w-[45%]",
                   "lg:w-auto lg:min-w-0 lg:transition-[flex-grow,flex-basis] lg:duration-500 lg:ease-out motion-reduce:transition-none",
-                  // cn() doesn't dedupe conflicting utilities, so only one flex class may be present at a time
                   isActive ? "lg:flex-[0_0_50vw]" : "lg:flex-[1_1_0%]",
                 )}
               >
                 <button
                   type="button"
                   aria-expanded={isActive}
-                  aria-label={t(isActive ? "collapse" : "expand", { index: number })}
+                  aria-label={t(isActive ? "collapse" : "expand", {
+                    index: number,
+                  })}
                   onClick={() => handleClick(index)}
                   className={cn(
-                    "group relative block size-full overflow-hidden rounded-[2px]",
+                    "group relative block size-full overflow-hidden rounded-xs",
                     isActive ? "lg:cursor-zoom-out" : "lg:cursor-zoom-in",
                   )}
                 >
@@ -98,7 +118,11 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
         rootClassName="lg:hidden"
         styles={{
           mask: { background: "rgba(15, 15, 15, 0.8)" },
-          container: { padding: 0, background: "transparent", boxShadow: "none" },
+          container: {
+            padding: 0,
+            background: "transparent",
+            boxShadow: "none",
+          },
           body: { padding: 0 },
         }}
       >

@@ -90,7 +90,10 @@ export async function Footer({ className }: { className?: string }) {
               ))}
               {contacts.emails.map((email) => (
                 <li key={email}>
-                  <a href={`mailto:${email}`} className={cn(linkClassName, "break-all")}>
+                  <a
+                    href={`mailto:${email}`}
+                    className={cn(linkClassName, "break-all")}
+                  >
                     {email}
                   </a>
                 </li>
@@ -115,7 +118,7 @@ export async function Footer({ className }: { className?: string }) {
                   title={t("mapAlt")}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="size-full border-0 [filter:grayscale(1)_invert(0.92)_contrast(0.9)]"
+                  className="size-full border-0 filter-[grayscale(1)_invert(0.92)_contrast(0.9)]"
                 />
               </div>
             )}
@@ -125,15 +128,20 @@ export async function Footer({ className }: { className?: string }) {
           </div>
         </div>
 
-        <SocialLinks socials={contacts.socials} className="mt-4 hidden lg:flex" />
+        <SocialLinks
+          socials={contacts.socials}
+          className="mt-4 hidden lg:flex"
+        />
 
         <div className="mt-13 flex flex-col gap-2 border-t-[0.5px] border-white/60 pt-3 lg:mt-3 lg:flex-row lg:items-center lg:justify-between">
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs leading-[1.4] lg:gap-x-4 lg:text-sm lg:leading-[1.3] lg:font-bold">
-            {LEGAL_ITEMS.filter(({ key }) => legal[key].content).map(({ key, href }) => (
-              <li key={key}>
-                <Link href={href}>{t(key)}</Link>
-              </li>
-            ))}
+            {LEGAL_ITEMS.filter(({ key }) => legal[key].content).map(
+              ({ key, href }) => (
+                <li key={key}>
+                  <Link href={href}>{t(key)}</Link>
+                </li>
+              ),
+            )}
           </ul>
           <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:gap-4">
             <p className="text-xs leading-[1.4] lg:text-sm lg:leading-[1.3] lg:font-bold">

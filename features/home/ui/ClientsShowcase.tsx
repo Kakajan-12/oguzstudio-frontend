@@ -29,7 +29,7 @@ export function ClientsShowcase({ clients, className }: ClientsShowcaseProps) {
   return (
     <div
       className={cn(
-        "lg:grid lg:grid-cols-[minmax(0,592px)_minmax(0,492px)] lg:justify-between lg:gap-x-10",
+        "lg:grid lg:grid-cols-[minmax(0,592px)_minmax(0,492px)] min-[1660px]:grid-cols-[minmax(0,720px)_minmax(0,492px)] 3xl:grid-cols-[minmax(0,880px)_minmax(0,492px)] lg:justify-between lg:gap-x-10",
         className,
       )}
     >
@@ -63,7 +63,8 @@ export function ClientsShowcase({ clients, className }: ClientsShowcaseProps) {
               onFocus={() => setDesktopActiveId(client.id)}
               className={cn(
                 "border-b border-line py-6 transition-colors duration-500 first:pt-0",
-                isDesktopActive && "lg:border-muted",
+                isMobileOpen && "border-muted",
+                isDesktopActive ? "lg:border-muted" : "lg:border-line",
               )}
             >
               <button
@@ -73,16 +74,18 @@ export function ClientsShowcase({ clients, className }: ClientsShowcaseProps) {
                 onClick={() => select(client.id)}
                 className="flex w-full cursor-pointer items-center text-left"
               >
-                {/* Width + margin animate instead of display so the title slides rather than jumps */}
-                <motion.span
-                  initial={false}
-                  animate={
+                {/* Width + margin animate instead of display so the title slides rather than jumps.
+                    CSS transitions, because mobile follows the tapped client and desktop the hovered one */}
+                <span
+                  className={cn(
+                    "block shrink-0 overflow-hidden transition-[width,margin,opacity] duration-400 ease-out",
+                    isMobileOpen
+                      ? "mr-4 w-4.25 opacity-100"
+                      : "mr-0 w-0 opacity-0",
                     isDesktopActive
-                      ? { width: 17, marginRight: 24, opacity: 1 }
-                      : { width: 0, marginRight: 0, opacity: 0 }
-                  }
-                  transition={TRANSITION}
-                  className="hidden shrink-0 overflow-hidden lg:block"
+                      ? "lg:mr-6 lg:w-4.25 lg:opacity-100"
+                      : "lg:mr-0 lg:w-0 lg:opacity-0",
+                  )}
                 >
                   <Image
                     src="/icons/double-chevron.svg"
@@ -91,7 +94,7 @@ export function ClientsShowcase({ clients, className }: ClientsShowcaseProps) {
                     height={19}
                     className="max-w-none"
                   />
-                </motion.span>
+                </span>
                 <span
                   className={cn(
                     "font-orbitron text-lg leading-[1.2] font-bold transition-colors duration-500 lg:text-[22px] lg:leading-[1.1] lg:font-semibold",

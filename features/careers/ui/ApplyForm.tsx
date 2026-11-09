@@ -4,17 +4,32 @@ import { useState } from "react";
 import Image from "next/image";
 import { Modal } from "antd";
 import { useLocale, useTranslations } from "next-intl";
-import { FormField, FormTextarea, fieldControlClassName, floatingLabelClassName } from "@/features/contacts/ui/FormField";
-import { RECAPTCHA_SITE_KEY, ReCaptcha } from "@/features/contacts/ui/ReCaptcha";
+import {
+  FormField,
+  FormTextarea,
+  fieldControlClassName,
+  floatingLabelClassName,
+} from "@/features/contacts/ui/FormField";
+import {
+  RECAPTCHA_SITE_KEY,
+  ReCaptcha,
+} from "@/features/contacts/ui/ReCaptcha";
 import { sendApplication, SubmitFailed } from "@/shared/api/forms";
 import { cn } from "@/shared/lib/cn";
 import { ArrowButton } from "@/shared/ui";
 import type { Position } from "../model/types";
 
 const MAX_SIZE = 10 * 1024 * 1024;
-const ACCEPT = ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+const ACCEPT =
+  ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
-type FormError = "rateLimit" | "invalid" | "network" | "fileType" | "fileSize" | "fileMissing";
+type FormError =
+  | "rateLimit"
+  | "invalid"
+  | "network"
+  | "fileType"
+  | "fileSize"
+  | "fileMissing";
 
 function checkFile(file: File | null): FormError | null {
   if (!file || file.size === 0) return "fileMissing";
@@ -99,12 +114,39 @@ export function ApplyForm({ position, onClose }: ApplyFormProps) {
           <ArrowButton onClick={close}>{t("close")}</ArrowButton>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} onChange={() => setError(null)} className="pt-4">
+        <form
+          onSubmit={handleSubmit}
+          onChange={() => setError(null)}
+          className="pt-4"
+        >
           <div className="flex flex-col gap-y-5">
-            <FormField label={t("fullName")} name="fullName" autoComplete="name" maxLength={200} required />
-            <FormField label={t("email")} name="email" type="email" autoComplete="email" maxLength={200} required />
-            <FormField label={t("phone")} name="phone" type="tel" autoComplete="tel" maxLength={50} />
-            <FormTextarea label={t("message")} name="message" maxLength={5000} />
+            <FormField
+              label={t("fullName")}
+              name="fullName"
+              autoComplete="name"
+              maxLength={200}
+              required
+            />
+            <FormField
+              label={t("email")}
+              name="email"
+              type="email"
+              autoComplete="email"
+              maxLength={200}
+              required
+            />
+            <FormField
+              label={t("phone")}
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              maxLength={50}
+            />
+            <FormTextarea
+              label={t("message")}
+              name="message"
+              maxLength={5000}
+            />
 
             <label className="relative block cursor-pointer pt-5">
               <input
@@ -112,9 +154,13 @@ export function ApplyForm({ position, onClose }: ApplyFormProps) {
                 name="resume"
                 accept={ACCEPT}
                 className="peer sr-only"
-                onChange={(event) => setFileName(event.target.files?.[0]?.name ?? "")}
+                onChange={(event) =>
+                  setFileName(event.target.files?.[0]?.name ?? "")
+                }
               />
-              {fileName && <span className={floatingLabelClassName}>{t("resume")}</span>}
+              {fileName && (
+                <span className={floatingLabelClassName}>{t("resume")}</span>
+              )}
               <span
                 className={cn(
                   fieldControlClassName,
@@ -122,13 +168,21 @@ export function ApplyForm({ position, onClose }: ApplyFormProps) {
                 )}
               >
                 <span className="truncate">{fileName || t("resume")}</span>
-                <Image src="/icons/plus.svg" alt="" width={16} height={16} className="size-4 shrink-0" />
+                <Image
+                  src="/icons/plus.svg"
+                  alt=""
+                  width={16}
+                  height={16}
+                  className="size-4 shrink-0"
+                />
               </span>
-              <span className="mt-2 block text-xs leading-[1.4] text-muted">{t("resumeHint")}</span>
+              <span className="mt-2 block text-xs leading-[1.4] text-muted">
+                {t("resumeHint")}
+              </span>
             </label>
           </div>
 
-          <div className="mt-8 flex flex-col gap-6">
+          <div className="mt-8 flex flex-col gap-6 items-end">
             <ReCaptcha key={captchaKey} onChange={setCaptchaToken} />
             {error && (
               <p role="alert" className="text-sm leading-[1.4] text-red-600">

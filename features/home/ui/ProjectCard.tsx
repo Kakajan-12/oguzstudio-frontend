@@ -14,12 +14,13 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         href={`/portfolio/${project.id}`}
         className="group flex flex-col gap-5"
       >
-        <div className="relative aspect-[592/360] w-full overflow-hidden rounded-[2px]">
+        {/* Mobile shows the text first and the image below it */}
+        <div className="relative order-last aspect-[592/360] w-full overflow-hidden rounded-[2px] lg:order-first">
           <Image
             src={project.image}
             alt={project.title}
             fill
-            sizes="(min-width: 1024px) 592px, 100vw"
+            sizes="(min-width: 1920px) 880px, (min-width: 1660px) 720px, (min-width: 1024px) 592px, 100vw"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </div>
@@ -32,7 +33,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
               <span aria-hidden className="size-[5px] rounded-full bg-muted" />
               {project.category}
             </p>
-            <p className="lg:text-justify text-base leading-normal text-black">
+            <p className="text-justify text-base leading-normal text-black">
               {project.description}
             </p>
           </div>

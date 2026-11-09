@@ -79,12 +79,21 @@ export function Header({ socials, className }: HeaderProps) {
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
                       "relative block rounded-xs px-1 xl:px-3 py-2.5 text-sm leading-none uppercase tracking-[0.28px] text-dark transition-colors duration-200",
-                      "hover:bg-dark hover:text-white focus-visible:bg-dark focus-visible:text-white focus-visible:outline-none",
+                      "hover:font-medium focus-visible:font-medium",
                       isActive &&
                         "font-medium after:absolute after:inset-x-2 xl:after:inset-x-4 after:bottom-1 after:h-px after:bg-current",
                     )}
                   >
-                    {t(key)}
+                    {/* Invisible bold copy reserves the width so hover doesn't shift neighbours */}
+                    <span className="inline-grid">
+                      <span className="col-start-1 row-start-1">{t(key)}</span>
+                      <span
+                        aria-hidden
+                        className="invisible col-start-1 row-start-1 font-medium"
+                      >
+                        {t(key)}
+                      </span>
+                    </span>
                   </Link>
                 </li>
               );

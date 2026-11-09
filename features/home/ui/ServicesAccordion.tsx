@@ -117,17 +117,28 @@ export function ServicesAccordion({ services, className }: ServicesAccordionProp
                   </button>
                 </h3>
 
-                <DotList
-                  items={service.tags}
-                  className={cn("mt-3", !isMobileOpen && "hidden lg:flex")}
-                />
+                <DotList items={service.tags} className="mt-3 hidden lg:flex" />
 
-                <div id={panelId} className={cn("lg:hidden", !isMobileOpen && "hidden")}>
-                  <ServiceImages service={service} className="mt-4" />
-                  <p className="mt-4 lg:text-justify text-base leading-normal tracking-[0.32px] text-black">
+                {/* Mobile panel, height-animated on tap; inert keeps the collapsed
+                    content out of the tab order */}
+                <motion.div
+                  id={panelId}
+                  initial={false}
+                  animate={
+                    isMobileOpen
+                      ? { height: "auto", opacity: 1 }
+                      : { height: 0, opacity: 0 }
+                  }
+                  transition={TRANSITION}
+                  inert={!isMobileOpen}
+                  className="overflow-hidden lg:hidden"
+                >
+                  <DotList items={service.tags} className="mt-3" />
+                  <p className="mt-4 text-justify text-base leading-normal tracking-[0.32px] text-black">
                     {service.description}
                   </p>
-                </div>
+                  <ServiceImages service={service} className="mt-4" />
+                </motion.div>
 
                 {/* Desktop copy of the description, height-animated on hover */}
                 <motion.div

@@ -105,7 +105,7 @@ export function CareersPositions({ title, positions }: CareersPositionsProps) {
                           {position.description}
                         </p>
 
-                        <div className="flex flex-col gap-3 lg:max-w-[539px]">
+                        <div className="flex flex-col gap-3 lg:max-w-135">
                           <h4 className="text-base leading-normal font-medium text-black lg:text-lg lg:tracking-[0.36px]">
                             {t("requirements")}
                           </h4>
@@ -132,7 +132,10 @@ export function CareersPositions({ title, positions }: CareersPositionsProps) {
                       </p>
                     </div>
 
-                    <ArrowButton onClick={() => setApplyingTo(position)} widthClassName="w-[187px]">
+                    <ArrowButton
+                      onClick={() => setApplyingTo(position)}
+                      widthClassName="w-full md:w-[187px] mt-10 md:mt-0"
+                    >
                       {t("apply")}
                     </ArrowButton>
                   </div>

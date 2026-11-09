@@ -15,7 +15,7 @@ export async function ProjectPage({ projectId }: { projectId: string }) {
   const related = project.related.slice(0, RELATED_COUNT);
 
   return (
-    <main className="flex-1 pb-[60px] lg:pb-[140px]">
+    <main className="flex-1 pb-15 lg:pb-35">
       <ProjectIntro project={project} />
       <ProjectDetails project={project} />
       <ProjectGallery title={project.title} images={project.gallery} />
