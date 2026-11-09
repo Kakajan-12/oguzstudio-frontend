@@ -1,51 +1,32 @@
 import Image from "next/image";
-import type { CompanyContacts } from "@/shared/api/types";
+import type { SocialLink } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
-
-const SOCIALS = [
-  {
-    name: "Instagram",
-    key: "instagram",
-    icon: "/icons/instagram.svg",
-    width: 22,
-    height: 22,
-  },
-  {
-    name: "TikTok",
-    key: "tiktok",
-    icon: "/icons/tiktok.svg",
-    width: 20,
-    height: 24,
-  },
-] as const;
+import { SOCIAL_NETWORKS } from "@/shared/config/socials";
 
 type SocialLinksProps = {
-  contacts: Pick<CompanyContacts, "instagram" | "tiktok">;
+  socials: SocialLink[];
   className?: string;
 };
 
-/** Links that are not set in the admin are hidden */
-export function SocialLinks({ contacts, className }: SocialLinksProps) {
+export function SocialLinks({ socials, className }: SocialLinksProps) {
   return (
-    <ul className={cn("flex items-center gap-3", className)}>
-      {SOCIALS.filter((social) => contacts[social.key]).map((social) => (
-        <li key={social.name}>
-          <a
-            href={contacts[social.key]}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={social.name}
-            className="flex size-10 items-center justify-center rounded-full bg-dot! transition-colors! hover:bg-muted! lg:size-11"
-          >
-            <Image
-              src={social.icon}
-              alt=""
-              width={social.width}
-              height={social.height}
-            />
-          </a>
-        </li>
-      ))}
+    <ul className={cn("flex flex-wrap items-center gap-3", className)}>
+      {socials.map(({ network, url }, index) => {
+        const { name, icon, width, height } = SOCIAL_NETWORKS[network];
+        return (
+          <li key={`${network}-${index}`}>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={name}
+              className="flex size-10 items-center justify-center rounded-full bg-dot! transition-colors! hover:bg-muted! lg:size-11"
+            >
+              <Image src={icon} alt="" width={width} height={height} />
+            </a>
+          </li>
+        );
+      })}
     </ul>
   );
 }

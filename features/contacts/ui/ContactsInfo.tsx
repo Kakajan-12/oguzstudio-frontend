@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import type { CompanyContacts } from "@/shared/api/types";
+import { SOCIAL_NETWORKS } from "@/shared/config/socials";
 import { cn } from "@/shared/lib/cn";
 import { CopyButton } from "./CopyButton";
 
@@ -41,29 +42,31 @@ type ContactsInfoProps = {
 
 export function ContactsInfo({ contacts, className }: ContactsInfoProps) {
   const t = useTranslations("ContactsPage.info");
-  const socials = [
-    { name: "Instagram", href: contacts.instagram },
-    { name: "TikTok", href: contacts.tiktok },
-  ].filter((social) => social.href);
 
   return (
     <dl className={cn("border-t border-line", className)}>
-      <InfoRow
-        label={t("phone")}
-        action={<CopyButton value={contacts.phone} className={actionClassName} />}
-      >
-        <a href={contacts.phoneHref} className={valueLinkClassName}>
-          {contacts.phone}
-        </a>
-      </InfoRow>
-      <InfoRow
-        label={t("email")}
-        action={<CopyButton value={contacts.email} className={actionClassName} />}
-      >
-        <a href={`mailto:${contacts.email}`} className={valueLinkClassName}>
-          {contacts.email}
-        </a>
-      </InfoRow>
+      {contacts.phones.map(({ value, href }) => (
+        <InfoRow
+          key={href}
+          label={t("phone")}
+          action={<CopyButton value={value} className={actionClassName} />}
+        >
+          <a href={href} className={valueLinkClassName}>
+            {value}
+          </a>
+        </InfoRow>
+      ))}
+      {contacts.emails.map((email) => (
+        <InfoRow
+          key={email}
+          label={t("email")}
+          action={<CopyButton value={email} className={actionClassName} />}
+        >
+          <a href={`mailto:${email}`} className={valueLinkClassName}>
+            {email}
+          </a>
+        </InfoRow>
+      ))}
       <InfoRow
         label={t("address")}
         action={
@@ -83,18 +86,18 @@ export function ContactsInfo({ contacts, className }: ContactsInfoProps) {
           {contacts.address}
         </address>
       </InfoRow>
-      {socials.length > 0 && (
+      {contacts.socials.length > 0 && (
         <InfoRow label={t("social")}>
           <span className="flex flex-wrap gap-x-7 gap-y-2">
-            {socials.map((social) => (
+            {contacts.socials.map(({ network, url }, index) => (
               <a
-                key={social.name}
-                href={social.href}
+                key={`${network}-${index}`}
+                href={url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn("underline underline-offset-4", valueLinkClassName)}
               >
-                {social.name}
+                {SOCIAL_NETWORKS[network].name}
               </a>
             ))}
           </span>

@@ -126,7 +126,7 @@
     "terms": "Условия использования",
     "privacy": "Политика конфиденциальности",
     "cookies": "Политика cookie",
-    "copyright": "© 2026, Все права защищены",
+    "copyright": "© {year} Все права защищены",
     "developedBy": "Разработано Hebent Technology"
   }
 }

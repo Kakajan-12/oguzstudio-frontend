@@ -6,7 +6,7 @@ import { Drawer } from "antd";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { NAV_ITEMS } from "@/shared/config/navigation";
-import type { CompanyContacts } from "@/shared/api/types";
+import type { SocialLink } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { useScrolled } from "@/shared/lib/useScrolled";
 import { Container } from "./Container";
@@ -19,7 +19,7 @@ function isActivePath(pathname: string, href: string) {
 
 type HeaderProps = {
   /** Social links for the mobile menu, from the contacts set in the admin */
-  socials: Pick<CompanyContacts, "instagram" | "tiktok">;
+  socials: SocialLink[];
   className?: string;
 };
 export function Header({ socials, className }: HeaderProps) {
@@ -165,7 +165,7 @@ export function Header({ socials, className }: HeaderProps) {
           </nav>
 
           <div className="px-4 py-8 flex justify-between items-center">
-            <SocialLinks contacts={socials} className="lg:hidden" />
+            <SocialLinks socials={socials} className="lg:hidden" />
 
             <LanguageSwitcher theme="dark" onChange={closeMenu} />
           </div>

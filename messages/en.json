@@ -126,7 +126,7 @@
     "terms": "Terms of Use",
     "privacy": "Privacy Policy",
     "cookies": "Cookie Terms",
-    "copyright": "© 2026, All rights Reserved",
+    "copyright": "© {year} All rights reserved",
     "developedBy": "Developed by Hebent Technology"
   }
 }

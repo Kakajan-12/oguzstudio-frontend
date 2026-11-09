@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -35,13 +36,20 @@ function mapEmbedUrl(coordinates: string, locale: string) {
   return `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=16&hl=${locale}&output=embed`;
 }
 
+async function getCurrentYear() {
+  "use cache";
+  cacheLife("days");
+  return new Date().getFullYear();
+}
+
 export async function Footer({ className }: { className?: string }) {
   const locale = await getLocale();
-  const [t, tNav, contacts, legal] = await Promise.all([
+  const [t, tNav, contacts, legal, year] = await Promise.all([
     getTranslations("Footer"),
     getTranslations("Navigation"),
     getContacts(locale),
     getPageContent("legal", locale),
+    getCurrentYear(),
   ]);
 
   return (
@@ -58,7 +66,7 @@ export async function Footer({ className }: { className?: string }) {
                 className="h-15 w-32 lg:h-22 lg:w-46.5"
               />
             </Link>
-            <SocialLinks contacts={contacts} className="lg:hidden" />
+            <SocialLinks socials={contacts.socials} className="lg:hidden" />
           </div>
 
           <div className="mt-13 flex w-full max-w-73 justify-between lg:contents">
@@ -74,16 +82,20 @@ export async function Footer({ className }: { className?: string }) {
               )}
             </FooterColumn>
             <FooterColumn title={t("contactUs")}>
-              <li>
-                <a href={contacts.phoneHref} className={linkClassName}>
-                  {contacts.phone}
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${contacts.email}`} className={linkClassName}>
-                  {t("email")}
-                </a>
-              </li>
+              {contacts.phones.map(({ value, href }) => (
+                <li key={href}>
+                  <a href={href} className={linkClassName}>
+                    {value}
+                  </a>
+                </li>
+              ))}
+              {contacts.emails.map((email) => (
+                <li key={email}>
+                  <a href={`mailto:${email}`} className={cn(linkClassName, "break-all")}>
+                    {email}
+                  </a>
+                </li>
+              ))}
             </FooterColumn>
           </div>
 
@@ -115,7 +127,7 @@ export async function Footer({ className }: { className?: string }) {
           </div>
         </div>
 
-        <SocialLinks contacts={contacts} className="mt-4 hidden lg:flex" />
+        <SocialLinks socials={contacts.socials} className="mt-4 hidden lg:flex" />
 
         <div className="mt-13 flex flex-col gap-2 border-t-[0.5px] border-white/60 pt-3 lg:mt-3 lg:flex-row lg:items-center lg:justify-between">
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs leading-[1.4] lg:gap-x-4 lg:text-sm lg:leading-[1.3] lg:font-bold">
@@ -127,7 +139,7 @@ export async function Footer({ className }: { className?: string }) {
           </ul>
           <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:gap-4">
             <p className="text-xs leading-[1.4] lg:text-sm lg:leading-[1.3] lg:font-bold">
-              {t("copyright")}
+              {t("copyright", { year })}
             </p>
             <a
               href={CONTACTS.hebent}

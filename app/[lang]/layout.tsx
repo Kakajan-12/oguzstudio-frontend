@@ -55,7 +55,7 @@ export default async function RootLayout({
           <Suspense fallback={null}>
             <AntProviders>
               <QueryProviders>
-                <Header socials={{ instagram: contacts.instagram, tiktok: contacts.tiktok }} />
+                <Header socials={contacts.socials} />
 
                 {children}
                 <Footer />
