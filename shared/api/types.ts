@@ -1,3 +1,4 @@
+import type { LegalKey } from "@/shared/config/navigation";
 // Shapes of GET /api/pages/:page — fields are defined in backend/src/pages/registry.ts.
 // Texts arrive already translated; image fields are absolute URLs (or null when not set).
 
@@ -53,6 +54,7 @@ export type PageContent = {
   contacts: {
     form: { title: string; subtitle: string };
   };
+  legal: Record<LegalKey, { content: string }>;
 };
 
 export type PageKey = keyof PageContent;

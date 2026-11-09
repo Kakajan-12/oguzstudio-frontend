@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getContacts } from "@/shared/api/content";
+import { getContacts, getPageContent } from "@/shared/api/content";
 import { CONTACTS } from "@/shared/config/contacts";
-import { NAV_ITEMS } from "@/shared/config/navigation";
+import { LEGAL_ITEMS, NAV_ITEMS } from "@/shared/config/navigation";
 import { cn } from "@/shared/lib/cn";
 import { Container } from "./Container";
 import { SocialLinks } from "./SocialLinks";
@@ -37,10 +37,11 @@ function mapEmbedUrl(coordinates: string, locale: string) {
 
 export async function Footer({ className }: { className?: string }) {
   const locale = await getLocale();
-  const [t, tNav, contacts] = await Promise.all([
+  const [t, tNav, contacts, legal] = await Promise.all([
     getTranslations("Footer"),
     getTranslations("Navigation"),
     getContacts(locale),
+    getPageContent("legal", locale),
   ]);
 
   return (
@@ -118,15 +119,11 @@ export async function Footer({ className }: { className?: string }) {
 
         <div className="mt-13 flex flex-col gap-2 border-t-[0.5px] border-white/60 pt-3 lg:mt-3 lg:flex-row lg:items-center lg:justify-between">
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs leading-[1.4] lg:gap-x-4 lg:text-sm lg:leading-[1.3] lg:font-bold">
-            <li>
-              <a href="#">{t("terms")}</a>
-            </li>
-            <li>
-              <a href="#">{t("privacy")}</a>
-            </li>
-            <li>
-              <a href="#">{t("cookies")}</a>
-            </li>
+            {LEGAL_ITEMS.filter(({ key }) => legal[key].content).map(({ key, href }) => (
+              <li key={key}>
+                <Link href={href}>{t(key)}</Link>
+              </li>
+            ))}
           </ul>
           <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:gap-4">
             <p className="text-xs leading-[1.4] lg:text-sm lg:leading-[1.3] lg:font-bold">
